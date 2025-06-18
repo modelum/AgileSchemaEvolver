@@ -1,0 +1,101 @@
+name: "CodeQL"
+
+on:
+  push:
+    paths:
+      - '**/*.orion'
+
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write     # Necessary to push changes
+      actions: read
+      security-events: write
+    strategy:
+      matrix:
+        language: [ 'java-kotlin' ]
+
+    steps:
+    # (1) This step checks out a copy of the repository.
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true  # Allow pushing changes back to the repo
+
+      # (2) 
+      - name: Extract file name from commit message
+        id: extract_file
+        run: |
+          FILENAME="${{ github.event.head_commit.message }}"
+          echo "script=$FILENAME" >> $GITHUB_OUTPUT
+          
+          if [ -f "$FILENAME" ]; then
+            echo "run=true" >> $GITHUB_OUTPUT
+          else
+            echo "run=false" >> $GITHUB_OUTPUT
+            echo "Error: File $FILENAME mentioned in the commit does not exist"
+          fi
+
+      # 3) If no valid .orion file was mentioned, skip the rest
+      - name: Skip if no new or modified .orion
+        if: steps.extract_file.outputs.run == 'false'
+        run: |
+          echo "No .orion files added or modified — skipping."
+
+      # 4) Clean out any previously generated queries
+      - name: Clean old generated queries
+        if: steps.extract_file.outputs.run == 'true'
+        run: rm -rf .github/codeql/queries/*
+
+      # 5) Generate new CodeQL queries based on the .orion file with analyzer
+      - name: Generate CodeQL queries
+        if: steps.extract_file.outputs.run == 'true'
+        run: |
+          echo "Generating queries for ${{ steps.extract_file.outputs.script }}"
+          java --add-opens java.base/java.lang=ALL-UNNAMED \
+               -jar .github/codeql/OrionFlow.jar \
+               -i "${{ steps.extract_file.outputs.script }}" \
+               -o .github/codeql/queries
+
+      # 6) Commit the newly generated queries back into the repo
+      - name: Commit generated queries
+        if: steps.extract_file.outputs.run == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: update CodeQL queries from ${{ steps.extract_file.outputs.script }}"
+          file_pattern: ".github/codeql/queries/**"
+
+      # 7) Initialize CodeQL with the generated queries  
+      - name: Initialize CodeQL
+        if: steps.extract_file.outputs.run == 'true'
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          config-file: ./.github/codeql/codeql-config.yml
+
+      # 8) Build the project (so CodeQL can analyze the compiled code)
+      - name: Build with Maven
+        if: steps.extract_file.outputs.run == 'true'
+        run: mvn -B package --file UseCase/pom.xml
+
+      # 9) Debug: list workspace files after build
+      - name: List files after Maven build
+        if: steps.extract_file.outputs.run == 'true'
+        run: ls -R UseCase/
+
+      # 10) Run the CodeQL analysis and produce a SARIF report
+      - name: Perform CodeQL Analysis
+        if: steps.extract_file.outputs.run == 'true'
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"
+          output: results.sarif
+
+      # 11) Show part of the SARIF output for debugging
+      - name: Echo results
+        if: steps.extract_file.outputs.run == 'true'
+        run: |
+          echo "Analysis complete; SARIF output:"
+          cat results.sarif/java.sarif

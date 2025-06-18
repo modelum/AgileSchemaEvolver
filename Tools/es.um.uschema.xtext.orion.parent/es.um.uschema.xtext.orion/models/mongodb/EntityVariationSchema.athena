@@ -1,0 +1,31 @@
+Schema MongoDBEntityVariationSchema:1
+
+Entity EntityToDelVar
+{
+  Common { +_id: String, attr: Number }
+  Variation 1 { attr1: String, attr2: Double }
+  Variation 2 { attr3: Boolean, attr4: List<String> }
+  Variation 3 { attr5: List<Option<String, Boolean>>, attr6: String }
+}
+
+Entity EntityToAdapt
+{
+  Common { +_id: String, attr: Number }
+  Variation 1 { attr1: String, attr2: Double }
+  Variation 2 { attr3: Boolean, attr4: List<String> }
+  Variation 3 { attr5: List<Option<String, Boolean>>, attr6: String }
+}
+
+Entity EntityToUnion_1
+{
+  +_id: String,
+  attr1: Number
+}
+
+Entity EntityToUnion_2
+{
+  Common { +_id: String, attr: Number }
+  Variation 1 { attr1: String, attr2: Double }
+  Variation 2 { attr3: Boolean, attr4: List<String> }
+  Variation 3 { attr5: List<Option<String, Boolean>>, attr6: String }
+}

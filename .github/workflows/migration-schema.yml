@@ -1,0 +1,138 @@
+name: "Orion Schema Versioning"
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  version:
+    if: startsWith(github.event.head_commit.message, 'orion')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      # 1) Clone the repo, fetch last two commits, and keep creds for later pushes
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+
+      # 2) Extract schema name from the commit message (no commit history check)
+      - name: Extract schema information
+        id: detect_orion
+        run: |
+          # Extract the schema name from the commit message
+          MSG="${{ github.event.head_commit.message }}"
+          SCHEMA_NAME=$(echo "$MSG" | sed -E 's/^orion\((accept|cancel)\): ([^,]+).*$/\2/')
+          
+          # Set the schema path directly without checking previous commits
+          SCRIPT="$SCHEMA_NAME"
+          
+          echo "Using schema: $SCHEMA_NAME"
+          echo "script=$SCRIPT" >> $GITHUB_OUTPUT
+
+      # 3) Parse action (accept vs cancel) and description from the commit message
+      - name: Parse commit message
+        id: parse_msg
+        run: |
+          MSG="${{ github.event.head_commit.message }}"
+          # If it doesn't match the expected pattern, exit with code 78 (skipped)
+          if ! echo "$MSG" | grep -qE '^orion\((accept|cancel)\): [^,]+'; then
+            echo "Not an orion action commit – skipping."
+            exit 78
+          fi
+
+          # Extract the action (accept or cancel)
+          ACTION=$(echo "$MSG" | sed -E 's/^orion\((accept|cancel)\):.*$/\1/')
+           # Extract the schema path
+          SCHEMA_PATH="${{ steps.detect_orion.outputs.script }}"
+          # Extract the schema name 
+          SCHEMA_NAME=$(echo "$MSG" | sed -E 's/^orion\((accept|cancel)\): ([^,]+).*$/\2/')
+          
+          # Extract the description
+          DESC=$(echo "$MSG" | sed -E 's/^orion\((accept|cancel)\): [^,]+,?(.*)$/\2/')
+          
+          echo "action=$ACTION"        >> $GITHUB_OUTPUT
+          echo "schema_path=$SCHEMA_PATH" >> $GITHUB_OUTPUT
+          echo "schema_name=$SCHEMA_NAME" >> $GITHUB_OUTPUT
+          echo "description=$DESC"     >> $GITHUB_OUTPUT
+
+      # 4) Ensure the VersionHistory folder structure and version-tracking files exist
+      - name: Ensure VersionHistory structure
+        run: |
+          mkdir -p VersionHistory/migrations VersionHistory/orion_scripts
+          [ -f VersionHistory/orion_schema_version.txt ] || echo "0" > VersionHistory/orion_schema_version.txt
+          if [ ! -f VersionHistory/version_table.md ]; then
+            echo "# Orion Schema Version History"                       > VersionHistory/version_table.md
+            echo ""                                                    >> VersionHistory/version_table.md
+            echo "| Version | Fichero \`.orion\` | Descripción | Fecha | Commit SHA |" \
+                                                                     >> VersionHistory/version_table.md
+            echo "|:-------:|:-----------------|:-----------:|:-----:|:----------:|" \
+                                                                     >> VersionHistory/version_table.md
+          fi
+
+      # 5) If action=accept, bump version and archive schema
+      - name: Handle accept
+        if: steps.parse_msg.outputs.action == 'accept'
+        run: |
+          # Bump version number
+          CUR=$(cat VersionHistory/orion_schema_version.txt)
+          NEXT=$((CUR + 1))
+          echo "$NEXT" > VersionHistory/orion_schema_version.txt
+
+          # Archive the current .orion file from the repository
+          PREV=$CUR
+          mkdir -p VersionHistory/orion_scripts
+          
+          # Search for the file in the current repository and copy it
+          SCHEMA_FILE="${{ steps.parse_msg.outputs.schema_name }}"
+          if [ -f "$SCHEMA_FILE" ]; then
+            cp "$SCHEMA_FILE" "VersionHistory/orion_scripts/V${PREV}_${{ steps.parse_msg.outputs.schema_name }}"
+            # Remove the original file after archiving
+            rm -f "$SCHEMA_FILE"
+          else
+            echo "ERROR: Schema file not found: $SCHEMA_FILE"
+            exit 1
+          fi
+
+          # Append a new row to the version table
+          DATE="$(date '+%Y-%m-%d %H:%M %Z')"
+          SHA="${GITHUB_SHA::7}"
+          printf "| %s | %s | %s | %s | %s |\n" \
+            "$PREV" \
+            "V${PREV}_${{ steps.parse_msg.outputs.schema_name }}" \
+            "${{ steps.parse_msg.outputs.description }}" \
+            "$DATE" \
+            "$SHA" \
+            >> VersionHistory/version_table.md
+          
+          # Stage all changes
+          git add -A
+          echo "All changes have been staged for commit"
+
+      # 6) If action=cancel, remove the .orion file entirely
+      - name: Handle cancel
+        if: steps.parse_msg.outputs.action == 'cancel'
+        run: |
+          # Remove the .orion file from the repository
+          ORION_FILE="${{ steps.parse_msg.outputs.schema_name }}"
+          if [ -f "$ORION_FILE" ]; then
+            rm -f "$ORION_FILE"
+            git add -A  # Staging explicitly both additions and deletions
+            echo "Removed and staged deletion of file: $ORION_FILE"
+          else
+            echo "Warning: .orion file not found at $ORION_FILE"
+          fi
+
+      # 7) Finally, commit and push the version changes back to the repo
+      - name: Stage & commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: schema ${{ steps.parse_msg.outputs.action }} ${{ steps.parse_msg.outputs.schema_name }}"
+          file_pattern: |
+            VersionHistory/orion_schema_version.txt
+            VersionHistory/version_table.md
+            VersionHistory/orion_scripts/**
+            ${{ steps.parse_msg.outputs.schema_path }}
+          push_options: --force-with-lease

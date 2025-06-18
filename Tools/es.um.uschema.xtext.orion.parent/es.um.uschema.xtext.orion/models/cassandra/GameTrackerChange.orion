@@ -1,0 +1,75 @@
+GameTracker_ops operations
+
+USING GameTracker:1
+
+// Schema Type operations
+/*ADD ENTITY Guild: { 
+  +id: Identifier, 
+  members: list<String>, 
+  code: String in ("ABC", "DEF", "GHI"),
+  mail: String /^.+@.+\\.com$/, 
+  name: String, 
+  num_players: Integer in (1,4,8,12), 
+  !tagName: String 
+  datas: aggr<Player_Data>&
+}
+
+ADD ENTITY Player1: { 
+  +player_id: Identifier, 
+  username: String, 
+  inventory: set<String>, 
+  location: tuple<Number, Number>, 
+  settings: map<String, String>,
+  score: Number (0..10),
+  level: Option<Number, String>
+}
+
+RENAME ENTITY Player1 TO Player2
+
+EXTRACT ENTITY Player2 INTO EntityToExtract(score, level)
+
+DELETE ENTITY Player2
+
+EXTRACT ENTITY Game INTO Additional_info(date_from,max_players, achievements)
+
+PROMOTE ATTR Player1::score, level
+
+ADD ENTITY Player1: { 
+  +player_id: Identifier, 
+  username: String, 
+  inventory: set<String>, 
+  location: tuple<Number, Number>, 
+  settings: map<String, String>,
+  score: Number (0..10),
+  level: Option<Number, String>
+}
+
+ADD REF Game::achievements: String+ TO Achievement
+
+CAST REF Ach_Summary::achievement TO int
+
+ADD ENTITY Player1: { 
+  +player_id: Identifier, 
+  username: String, 
+  inventory: set<String>, 
+  location: tuple<Number, Number>, 
+  settings: map<String, String>,
+  score: Number (0..10),
+  level: Option<Number, String>
+}
+
+ADD AGGR Player1::aggrSimple: {attr1: String, attr2: Number, !example: Double}+
+*/
+
+ADD RELATIONSHIP RelationshipAdded1: {tiempo: Timestamp}
+
+ADD REF RelationshipAdded1::ref1: String? TO Player
+
+ADD REF RelationshipAdded1::ref2: String? TO Game
+
+RENAME RELATIONSHIP RelationshipAdded1 TO RelationshipRenamed
+
+DELETE RELATIONSHIP RelationshipRenamed
+
+
+

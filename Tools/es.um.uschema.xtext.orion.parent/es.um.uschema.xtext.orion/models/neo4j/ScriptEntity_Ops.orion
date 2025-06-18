@@ -1,0 +1,13 @@
+Neo4jScriptEntity_Ops operations
+
+SCRIPT MODE
+
+ADD ENTITY EntityAdded1: { attr: String }
+ADD ENTITY EntityAdded2: { attr1: Number, attr2: Boolean }
+ADD ENTITY EntityAdded3: { attr1: Double, attr2: List, attr3: Boolean }
+
+DELETE ENTITY EntityAdded2
+RENAME ENTITY EntityAdded3 TO EntityRenamed
+
+// For now we do not test split, extract, merge
+// We will not test variation operations here because we cannot create variations directly with ADD ENTITY

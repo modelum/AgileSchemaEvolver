@@ -1,0 +1,11 @@
+Umugram_ops operations
+
+USING Umugram:1
+
+// Schema Type operations
+
+RENAME ENTITY VideoPost TO ContentPost
+
+DELETE ENTITY Post
+
+

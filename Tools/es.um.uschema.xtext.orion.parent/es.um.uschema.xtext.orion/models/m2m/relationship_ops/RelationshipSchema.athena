@@ -1,0 +1,109 @@
+Schema RelationshipSchema:1
+
+Relationship RelationshipToAdd_1    { key: String }
+Relationship RelationshipToDel_1    { key: String }
+Relationship RelationshipToRename_1 { key: String, attr1: Number }
+Relationship RelationshipRenamed_1  { key: String, attr3: Boolean }
+Relationship RelationshipToRename_2 { key: String, attr2: String }
+
+Relationship RelationshipToExtract_1
+{
+  attr1: Number,
+  attr2: String,
+  attr3: List<Option<String, Boolean>>
+}
+
+Relationship RelationshipToExtract_2
+{
+  Common      { attr1: Number }
+  Variation 1 { attr2: String }
+  Variation 2 { attr3: List<Option<String, Boolean>> }
+}
+
+Relationship RelationshipToSplit_1
+{
+  attr1: Number,
+  attr2: String,
+  attr3: List<Option<String, Boolean>>
+}
+
+Relationship RelationshipToSplit_2
+{
+  Common      { attr1: Number }
+  Variation 1 { attr2: String }
+  Variation 2 { attr3: List<Option<String, Boolean>> }
+}
+
+Relationship RelationshipToMerge_1
+{
+  +key: String,
+  attr1: List<Option<String, Boolean>>
+}
+
+Relationship RelationshipToMerge_2
+{
+  Common      { +key: String, attr2: Number }
+  Variation 1 { attr3: String }
+  Variation 2 { attr4: List<Option<String, Boolean>> }
+}
+
+Relationship RelationshipToDelVar_1
+{
+  attr1: Number
+}
+
+Relationship RelationshipToDelVar_2
+{
+  Common { attr: Number }
+  Variation 1 { attr1: String }
+  Variation 2 { attr2: Boolean }
+  Variation 3 { attr3: List<Option<String, Boolean>> }
+}
+
+Relationship RelationshipToAdapt_1
+{
+  attr1: Number
+}
+
+Relationship RelationshipToAdapt_2
+{
+  Common { attr: Number }
+  Variation 1 { attr1: String }
+  Variation 2 { attr2: Boolean }
+  Variation 3 { attr3: List<Option<String, Boolean>> }
+}
+
+Relationship RelationshipToUnion_1
+{
+  attr1: Number
+}
+
+Relationship RelationshipToUnion_2
+{
+  Common { attr: Number }
+  Variation 1 { attr1: String }
+  Variation 2 { attr2: Boolean }
+  Variation 3 { attr3: List<Option<String, Boolean>> }
+}
+
+Root entity EntityReferences
+{
+  +id: Identifier
+}
+
+Root entity EntityReferenced
+{
+  +id: Identifier
+}
+
+Relationship Relationship1
+{
+  attr1, attr2
+}
+
+Relationship Relationship2
+{
+  Common { attr }
+  Variation 1 { attr1 }
+  Variation 2 { attr2 }
+}

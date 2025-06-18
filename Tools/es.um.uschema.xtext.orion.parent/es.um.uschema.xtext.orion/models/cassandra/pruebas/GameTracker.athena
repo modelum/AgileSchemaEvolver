@@ -1,0 +1,59 @@
+Schema GameTracker:2
+
+root entity Player
+{
+  common
+  {
+    +player_id: Identifier,
+    nickname: String,
+    avatar_url: String /^https/,
+    status: Integer ( 0 .. 5 ),
+    last_activity: Timestamp,
+    reputation: Double,
+    suspended: Boolean,
+    user_data: aggr<Player_Data>&
+  }
+  variation 1
+  {
+    experience: Double,
+    hours_played: Double,
+    ach_earned: aggr<Ach_Summary>+,
+    score: Integer ( 0 .. 99999 )
+  }
+  variation 2
+}
+
+entity Player_Data
+{
+  country_code: Integer,
+  name: String,
+  email: String /^.+@.+\\.com$/,
+  ?birthday: Timestamp
+}
+
+entity Ach_Summary
+{
+  achievement: ref<Achievement as Identifier>&,
+  of_the_day: Boolean,
+  ?completed_at: Timestamp,
+  ?points: Integer ( 0 .. 5000 )
+}
+
+root entity Achievement
+{
+  +achievement_id: Identifier,
+  categories: List<String>,
+  description: String,
+  is_active: Boolean,
+  points: Integer ( 0 .. 5000 )
+}
+
+root entity Game
+{
+  +game_id: Identifier,
+  date_from: Timestamp,
+  genres: List<String>,
+  title: String,
+  ?description: String,
+  ?max_players: Integer
+}

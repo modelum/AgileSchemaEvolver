@@ -1,0 +1,92 @@
+GameTracker_ops operations
+
+USING GameTracker:1
+
+// Schema Type operations
+/*ADD ENTITY Guild: { 
+  +id: Identifier, 
+  members: list<String>, 
+  code: String in ("ABC", "DEF", "GHI"),
+  mail: String /^.+@.+\\.com$/, 
+  name: String, 
+  num_players: Integer in (1,4,8,12), 
+  !tagName: String 
+  datas: aggr<Player_Data>&
+}
+
+ADD ENTITY Player1: { 
+  +player_id: Identifier, 
+  username: String, 
+  inventory: set<String>, 
+  location: tuple<Number, Number>, 
+  settings: map<String, String>,
+  score: Number (0..10),
+  level: Option<Number, String>
+}
+
+RENAME ENTITY Player1 TO Player2
+
+EXTRACT ENTITY Player2 INTO EntityToExtract(score, level)
+
+DELETE ENTITY Player2
+
+EXTRACT ENTITY Game INTO Additional_info(date_from,max_players, achievements)
+
+PROMOTE ATTR Player1::score, level
+
+ADD ENTITY Player1: { 
+  +player_id: Identifier, 
+  username: String, 
+  inventory: set<String>, 
+  location: tuple<Number, Number>, 
+  settings: map<String, String>,
+  score: Number (0..10),
+  level: Option<Number, String>
+}
+
+ADD REF Game::achievements: String+ TO Achievement
+
+CAST REF Ach_Summary::achievement TO int
+
+ADD ENTITY Player1: { 
+  +player_id: Identifier, 
+  username: String, 
+  inventory: set<String>, 
+  location: tuple<Number, Number>, 
+  settings: map<String, String>,
+  score: Number (0..10),
+  level: Option<Number, String>
+}
+
+RENAME ENTITY Player1 TO Player2
+
+ADD AGGR Player1::aggrSimple: {attr1: String, attr2: Number, !example: Double}+
+*/
+
+RENAME ENTITY Player1 TO Player2
+
+ADD REF RelationshipAdded1::ref1: String? TO Player
+
+ADD REF RelationshipAdded1::ref2: String? TO Game
+
+DELETE ENTITY Player1
+
+RENAME Player1::username TO user
+
+DELETE Player1::inventory
+
+CAST ATTR Video::duration, marktime TO Number
+
+PROMOTE ATTR EntityToPromote::id2, id3, id4
+
+RENAME RELATIONSHIP RelationshipAdded3 TO RelationshipRenamed
+
+DELETE RELATIONSHIP RelationshipAdded2
+
+MOVE Video::duration1 TO VideoPost::duration1 WHERE id = thisRef
+
+
+CAST REF VideoPost::id TO int
+
+
+

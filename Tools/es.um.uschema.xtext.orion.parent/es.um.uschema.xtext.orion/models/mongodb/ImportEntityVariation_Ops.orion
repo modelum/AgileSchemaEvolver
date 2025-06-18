@@ -1,0 +1,10 @@
+MongoDBImportEntityVariation_Ops operations
+
+USING MongoDBEntityVariationSchema:1
+
+DELVAR ENTITY EntityToDelVar::2
+
+ADAPT ENTITY EntityToAdapt::2 TO 3
+
+UNION ENTITY EntityToUnion_1
+UNION ENTITY EntityToUnion_2

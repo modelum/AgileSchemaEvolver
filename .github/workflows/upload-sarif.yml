@@ -1,0 +1,19 @@
+name: "Upload SARIF"
+
+on:
+  push:
+      paths:
+          - '**.sarif'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # (1) This step checks out a copy of the repository.
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Upload SARIF file # (2) Send the SARIF report to GitHub Security
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        # (3) Path to SARIF file relative to the root of the repository
+        sarif_file: results.sarif

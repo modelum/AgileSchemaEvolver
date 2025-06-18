@@ -1,0 +1,88 @@
+/* converted on Fri Mar 4, 2022, 19:50 (UTC+01) by xtext-to-w3c v0.57 which is Copyright (c) 2011-2022 by Gunther Rademacher <grd@gmx.net> */
+
+AthenaSchema ::= 'Schema' SchemaId ( 'import' Import )* ( FeatureSetDecl | EntityDecl | RelationshipDecl )*
+SchemaId ::= ValidId ':' VersionId
+Import   ::= QualifiedImport
+
+TopLevelStructureDefiningElementDecl ::= SchemaTypeDecl | FeatureSetDecl
+FeatureSetDecl ::= 'fset' ValidId StructureExpr
+SchemaTypeDecl ::= EntityDecl | RelationshipDecl
+EntityDecl ::= ShortEntityDecl | RegularEntityDecl
+ShortEntityDecl ::= 'root'? 'entity' ValidId ( '::' QualifiedEntityName ( ',' QualifiedEntityName )* )? StructureExpr
+RegularEntityDecl ::= 'root'? 'entity' ValidId ( '::' QualifiedEntityName ( ',' QualifiedEntityName )* )? '{' CommonSpec? VariationDecl+ '}'
+RelationshipDecl ::= ShortRelationshipDecl | RegularRelationshipDecl
+ShortRelationshipDecl ::= 'relationship' ValidId ( '::' QualifiedRelationshipName ( ',' QualifiedRelationshipName )* )? StructureExpr
+RegularRelationshipDecl ::= 'relationship' ValidId ( '::' QualifiedRelationshipName ( ',' QualifiedRelationshipName )* )? '{' CommonSpec? VariationDecl+ '}'
+CommonSpec ::= 'common' StructureExpr
+VariationDecl ::= 'variation' VariationIdSpec StructureExpr?
+
+StructureExpr ::= StructureTerm ( ( 'U' | '+' | '-' ) StructureTerm )*
+StructureTerm ::= StructurePrimary ( 'I' StructurePrimary )*
+StructurePrimary ::= StructureLiteral | TopLevelStructureDefiningElementDeclRef | VariationDeclRef | SQLStructure | '(' StructureExpr ')'
+StructureLiteral ::= '{' FeatureSet '}'
+TopLevelStructureDefiningElementDeclRef ::= QualifiedTopLevelStructureDefiningElementName
+VariationDeclRef ::= QualifiedVariationName
+FeatureSet ::= Feature ( ',' Feature )*
+
+Feature  ::= ComposedReference | SimpleFeature
+ComposedReference ::= '(' ValidId ( ',' ValidId )* ')' ':' ComposedReferenceTarget
+SimpleFeature ::= ( '+' | '?'? '!'? ) ValidId ( ':' Type )?
+Type     ::= DataType | SimpleReferenceTarget | SimpleAggregateTarget | InnerStructureLiteralArray | InnerStructureLiteral
+InnerStructureLiteralArray ::= '[' InnerStructureLiteral ( ',' InnerStructureLiteral )* ']'
+InnerStructureLiteral ::= '{' FeatureSet '}'
+SimpleReferenceTarget ::= 'ref' '<' QualifiedEntityName ( 'as' SinglePrimitiveType | 'feat' ( QualifiedRelationshipName | QualifiedVariationName ( ',' QualifiedVariationName )* ) )? '>' ( '?' | '&' | '*' | '+' )?
+ComposedReferenceTarget ::= 'ref' '<' QualifiedEntityName '>'
+SimpleAggregateTarget ::= 'aggr' '<' ( QualifiedEntityName | QualifiedVariationName ( ',' QualifiedVariationName )* ) '>' ( '?' | '&' | '*' | '+' )?
+DataType ::= 'Null' | PrimitiveType | List | Set | Map | Tuple
+PrimitiveType ::= SinglePrimitiveType | OptionPrimitiveType
+OptionPrimitiveType ::= 'Option' '<' SinglePrimitiveType ( ',' SinglePrimitiveType )* '>'
+List     ::= 'List' ( '<' DataType '>' )?
+Set      ::= 'Set' ( '<' DataType '>' )?
+Map      ::= 'Map' ( '<' PrimitiveType? ',' DataType? '>' )?
+Tuple    ::= 'Tuple' ( '<' DataType ( ',' DataType )* '>' )?
+
+SinglePrimitiveType ::= UnrestrictedPrimitiveType | RestrictedPrimitiveType
+RestrictedPrimitiveType ::= RangedNumber | EnumRestrictedNumber | RegexpRestrictedString | EnumRestrictedString
+RangedNumber ::= NUMBER_LITERAL '(' EInt '..' EInt ')'
+RegexpRestrictedString ::= 'String' REGEX
+EnumRestrictedNumber ::= NUMBER_LITERAL 'in' '(' EInt ( ',' EInt )* ')'
+EnumRestrictedString ::= 'String' 'in' '(' STRING ( ',' STRING )* ')'
+UnrestrictedPrimitiveType ::= 'String' | NUMBER_LITERAL | 'Boolean' | 'Bool' | 'Identifier' | 'Timestamp'
+NUMBER_LITERAL ::= 'Integer' | 'Int' | 'Number' | 'Float' | 'Double'
+
+SQLStructure ::= 'SQL' 'CREATE' 'TEMPORARY'? 'TABLE' ( 'IF' 'NOT' 'EXISTS' )? ValidId? '(' SQLDefinition ( ',' SQLDefinition )* ')' ';'
+SQLDefinition ::= SQLColumnDefinition | SQLConstraintDefinition
+SQLColumnDefinition ::= ValidId SQLType ( '(' EInt ( ',' EInt )? ')' )? SQL_CONSTRAINT_DEFINITION_LITERAL? SQLReferenceTarget?
+SQLConstraintDefinition ::= SQLPrimaryConstraintDefinition | SQLForeignConstraintDefinition | SQLUniqueConstraintDefinition
+SQLPrimaryConstraintDefinition ::= ( 'CONSTRAINT' ValidId? )? 'PRIMARY' 'KEY' '(' ValidId ( ',' ValidId )* ')'
+SQLForeignConstraintDefinition ::= ( 'CONSTRAINT' ValidId? )? 'FOREIGN' 'KEY' ValidId? '(' ValidId ( ',' ValidId )* ')' SQLReferenceTarget
+SQLUniqueConstraintDefinition ::= ( 'CONSTRAINT' ValidId? )? 'UNIQUE' 'KEY' ValidId? '(' ValidId ( ',' ValidId )* ')'
+SQLReferenceTarget ::= 'REFERENCES' QualifiedEntityName '(' ValidId ( ',' ValidId )* ')'
+SQLType  ::= SQL_BOOLEAN_LITERAL | SQL_NUMBER_LITERAL | SQL_DOUBLE_LITERAL | SQL_TIMESTAMP_LITERAL | SQL_STRING_LITERAL 
+SQL_BOOLEAN_LITERAL ::= 'TINYINT' | 'BOOLEAN' | 'BOOL' 
+SQL_NUMBER_LITERAL ::= 'INT' | 'INTEGER' | 'SMALLINT' | 'MEDIUMINT' | 'DEC' | 'FIXED' | 'DECIMAL' | 'NUMERIC' | 'BIT'
+SQL_DOUBLE_LITERAL ::= 'FLOAT' | 'REAL' | 'DOUBLE' 'PRECISION'?
+SQL_TIMESTAMP_LITERAL ::= 'DATE' | 'TIME' | 'DATETIME' | 'TIMESTAMP' | 'YEAR'
+SQL_STRING_LITERAL ::= 'CHAR' | 'VARCHAR' | 'BINARY' | 'VARBINARY' | 'BLOB' | 'TEXT'
+SQL_CONSTRAINT_DEFINITION_LITERAL ::= SQL_PRIMARY_KEY_LITERAL | SQL_UNIQUE_LITERAL | SQL_NULL_LITERAL
+SQL_PRIMARY_KEY_LITERAL ::= 'PRIMARY' 'KEY'
+SQL_UNIQUE_LITERAL ::= 'UNIQUE' 'KEY'
+SQL_NULL_LITERAL ::= 'NOT'? 'NULL'
+
+QualifiedImport ::= ValidId ':' VersionId
+QualifiedTopLevelStructureDefiningElementName ::= ValidId ( ':' VersionId )? ( '.' ValidId )*
+QualifiedEntityName ::= ValidId ( ':' VersionId )? ( '.' ValidId )*
+QualifiedRelationshipName ::= ValidId ( ':' VersionId )? ( '.' ValidId )*
+QualifiedVariationName ::= QualifiedTopLevelStructureDefiningElementName '.' VariationIdSpec
+VariationIdSpec ::= INT
+EInt     ::= '-'? INT
+VersionId ::= INT
+ValidId  ::= ID | KEYWORD
+KEYWORD  ::= 'schema' | 'import' | 'struct' | 'root' | 'entity' | 'relationship' | 'common' | 'variation' | 'U' | 'I' | 'ref' | 'feat' | 'as' | 'aggr' | 'Null' | 'Option' | 'List' |
+             'Set' | 'Map' | 'Tuple' | 'in' | 'Boolean' | 'Bool' | 'Identifier' | 'Timestamp' | 'Integer' | 'Int' | 'Number' | 'Float' | 'Double' | 'String' | 'sql' | 'create' |
+             'temporary' | 'table' | 'if' | 'not' | 'exists' | 'constraint' | 'foreign' | 'key' | 'references' | 'unique' | 'primary' | 'TINYINT' | 'SMALLINT' | 'DEC' | 'FIXED' |
+             'DECIMAL' | 'NUMERIC' | 'BIT' | 'REAL' | 'PRECISION' | 'DATE' | 'TIME' | 'DATETIME' | 'YEAR' | 'CHAR' | 'VARCHAR' | 'BINARY' | 'VARBINARY' | 'BLOB' | 'TEXT'
+
+<?TOKENS?>
+
+REGEX    ::= '/' ( '\' . | [^\/] )* '/'

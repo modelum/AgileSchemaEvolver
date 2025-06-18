@@ -1,0 +1,28 @@
+Umugram operations
+
+SCRIPT MODE
+
+/*
+INSERT INTO USER (created_at, email, password, updated_at, user_id, username) VALUES
+('2024-01-15 08:23:45', 'alice.smith@example.com', 'P@ssw0rd1', '2024-03-01 12:00:00', 'u001', 'alice_smith'),
+('2024-02-10 14:05:12', 'bob.johnson@example.com', 'Secr3tKey!',   '2024-03-02 09:30:15', 'u002', 'bobj'),
+('2024-03-05 19:47:30', 'carla98@example.com',     'MyPa$$123',    '2024-03-05 20:00:00', 'u003', 'carla98'),
+('2024-03-20 11:12:00', 'daniel.k@example.com',    'Qwerty!234',   '2024-03-21 08:45:00', 'u004', 'danielk'),
+('2024-04-01 07:00:00', 'eva.green@example.com',   'Green$Eva56',  '2024-04-02 16:20:00', 'u005', 'evagreen');
+*/
+
+// CREATE A USER
+ADD ENTITY User: { 
+	+user_id: String, 
+	username: String, 
+	!email: String /^.+@.+\\.com$/, 
+	password: String,
+	created_at: Timestamp,
+	updated_at: Timestamp
+}
+
+// EXTRACT METADATA OF USER
+SPLIT ENTITY User INTO User_Metadata(user_id, created_at, updated_at),  User_Account(user_id, username, email, password)
+
+// COPY USERNAME TO USER_METADATA
+COPY User_Account::username TO User_Metadata::username WHERE user_id = user_id

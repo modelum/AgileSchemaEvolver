@@ -1,0 +1,5 @@
+Schema MiEjemplo:1
+
+root entity Hello{
+	+ info: String
+}

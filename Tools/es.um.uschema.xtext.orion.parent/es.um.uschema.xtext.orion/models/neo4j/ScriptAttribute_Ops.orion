@@ -1,0 +1,28 @@
+Neo4jScriptAttribute_Ops operations
+
+SCRIPT MODE
+
+ADD ENTITY Entity1: { id: String }
+ADD ENTITY Entity2: { id: String }
+
+ADD ATTR *::addAttrStr: String
+ADD ATTR *::addAttrNum: Number
+ADD ATTR *::addAttrDouble: Double
+ADD ATTR *::addAttrBool: Boolean
+ADD ATTR *::addAttrList: List
+ADD ATTR Entity1::addAttrStrVal: String ("initValue")
+ADD ATTR Entity1::addAttrNumVal: Number (33)
+ADD ATTR Entity1::addAttrDoubleVal: Double (33.1)
+ADD ATTR Entity1::addAttrBoolVal: Boolean (false)
+
+ADD ENTITY EntityToCast: { attrToCastStr: String, attrToCastNum: Number, attrToCastDouble: Double, attrToCastBool: Boolean}
+
+CAST ATTR EntityToCast::attrToCastStr, attrToCastNum TO Bool
+CAST ATTR EntityToCast::attrToCastDouble TO Number
+CAST ATTR EntityToCast::attrToCastNum, attrToCastBool TO String
+
+ADD ENTITY EntityToPromote: { attr1: String, attr2: String }
+PROMOTE ATTR EntityToPromote::attr1, attr2
+
+ADD ENTITY EntityToDemote: { key1: String, key2: String }
+DEMOTE ATTR EntityToDemote::key1, key2

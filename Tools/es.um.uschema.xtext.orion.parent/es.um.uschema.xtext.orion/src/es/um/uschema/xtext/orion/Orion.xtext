@@ -1,0 +1,254 @@
+grammar es.um.uschema.xtext.orion.Orion with es.um.uschema.xtext.athena.Athena
+
+generate orion "http://www.um.es/uschema/xtext/orion/Orion"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+OrionOperations:
+  name=ValidId 'OPERATIONS'
+  ( ( 'USING' imports=Import ) | ( scriptMode?='SCRIPT' 'MODE' ) )
+  ( operations+=BasicOperation+ | evolBlocks+=EvolBlock+ )
+;
+
+EvolBlock:
+  'EBlock' name=INT
+  '{'
+    ( operations+=BasicOperation )+
+  '}'
+;
+
+BasicOperation:
+  SchemaTypeOp | FeatureOp | AttributeOp | ReferenceOp | AggregateOp
+;
+
+SchemaTypeOp:
+  EntityOp | RelationshipOp
+;
+
+EntityOp:
+  EntityAddOp | EntityDeleteOp | EntityRenameOp | EntitySplitOp | EntityMergeOp | EntityExtractOp | EntityDelVarOp | EntityAdaptOp | EntityUnionOp
+;
+
+RelationshipOp:
+  RelationshipAddOp | RelationshipDeleteOp | RelationshipRenameOp | RelationshipSplitOp | RelationshipMergeOp | RelationshipExtractOp | RelationshipDelVarOp | RelationshipAdaptOp | RelationshipUnionOp
+;
+
+FeatureOp:
+  FeatureDeleteOp | FeatureRenameOp | FeatureCopyOp | FeatureMoveOp | FeatureNestOp | FeatureUnnestOp
+;
+
+AttributeOp:
+  AttributeAddOp | AttributeCastOp | AttributePromoteOp | AttributeDemoteOp
+;
+
+ReferenceOp:
+  ReferenceAddOp | ReferenceCastOp | ReferenceMultiplicityOp | ReferenceMorphOp
+;
+
+AggregateOp:
+  AggregateAddOp | AggregateMultiplicityOp | AggregateMorphOp
+;
+
+EntityAddOp:             'ADD'     'ENTITY'       spec=SchemaTypeAddSpec;
+EntityDeleteOp:          'DELETE'  'ENTITY'       spec=SchemaTypeDeleteSpec;
+EntityRenameOp:          'RENAME'  'ENTITY'       spec=SchemaTypeRenameSpec;
+EntitySplitOp:           'SPLIT'   'ENTITY'       spec=SchemaTypeSplitSpec;
+EntityExtractOp:         'EXTRACT' 'ENTITY'       spec=SchemaTypeExtractSpec;
+EntityMergeOp:           'MERGE'   'ENTITY'       spec=SchemaTypeMergeSpec;
+EntityDelVarOp:          'DELVAR'  'ENTITY'       spec=SchemaTypeDelVarSpec;
+EntityAdaptOp:           'ADAPT'   'ENTITY'       spec=SchemaTypeAdaptSpec;
+EntityUnionOp:           'UNION'   'ENTITY'       spec=SchemaTypeUnionSpec;
+RelationshipAddOp:       'ADD'     'RELATIONSHIP' spec=SchemaTypeAddSpec;
+RelationshipDeleteOp:    'DELETE'  'RELATIONSHIP' spec=SchemaTypeDeleteSpec;
+RelationshipRenameOp:    'RENAME'  'RELATIONSHIP' spec=SchemaTypeRenameSpec;
+RelationshipSplitOp:     'SPLIT'   'RELATIONSHIP' spec=SchemaTypeSplitSpec;
+RelationshipExtractOp:   'EXTRACT' 'RELATIONSHIP' spec=SchemaTypeExtractSpec;
+RelationshipMergeOp:     'MERGE'   'RELATIONSHIP' spec=SchemaTypeMergeSpec;
+RelationshipDelVarOp:    'DELVAR'  'RELATIONSHIP' spec=SchemaTypeDelVarSpec;
+RelationshipAdaptOp:     'ADAPT'   'RELATIONSHIP' spec=SchemaTypeAdaptSpec;
+RelationshipUnionOp:     'UNION'   'RELATIONSHIP' spec=SchemaTypeUnionSpec;
+FeatureDeleteOp:         'DELETE'                 spec=FeatureDeleteSpec;
+FeatureRenameOp:         'RENAME'                 spec=FeatureRenameSpec;
+FeatureCopyOp:           'COPY'                   spec=FeatureAllocateSpec;
+FeatureMoveOp:           'MOVE'                   spec=FeatureAllocateSpec;
+FeatureNestOp:           'NEST'                   spec=FeatureNestSpec;
+FeatureUnnestOp:         'UNNEST'                 spec=FeatureUnnestSpec;
+AttributeAddOp:          'ADD'     'ATTR'         spec=AttributeAddSpec;
+AttributeCastOp:         'CAST'    'ATTR'         spec=AttributeOrReferenceCastSpec;
+AttributePromoteOp:      'PROMOTE' 'ATTR'         spec=AttributePromoteSpec;
+AttributeDemoteOp:       'DEMOTE'  'ATTR'         spec=AttributeDemoteSpec;
+ReferenceAddOp:          'ADD'     'REF'          spec=ReferenceAddSpec;
+ReferenceCastOp:         'CAST'    'REF'          spec=AttributeOrReferenceCastSpec;
+ReferenceMultiplicityOp: 'MULT'    'REF'          spec=ReferenceOrAggregateMultiplicitySpec;
+ReferenceMorphOp:        'MORPH'   'REF'          spec=ReferenceMorphSpec;
+AggregateAddOp:          'ADD'     'AGGR'         spec=AggregateAddSpec;
+AggregateMultiplicityOp: 'MULT'    'AGGR'         spec=ReferenceOrAggregateMultiplicitySpec;
+AggregateMorphOp:        'MORPH'   'AGGR'         spec=AggregateMorphSpec;
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////// Entity operations ///////////////////////
+
+SchemaTypeAddSpec:
+  name=ValidId ( ':' '{' features+=SimpleDataFeature (',' features+=SimpleDataFeature )* '}' )?
+;
+
+SchemaTypeDeleteSpec:
+  ref=ValidId
+;
+
+SchemaTypeRenameSpec:
+  ref=ValidId 'TO' name=ValidId
+;
+
+SchemaTypeSplitSpec:
+  ref=ValidId 'INTO' name1=ValidId features1=SplitFeatures ',' name2=ValidId features2=SplitFeatures
+;
+
+SchemaTypeExtractSpec:
+  ref=ValidId 'INTO' name=ValidId features=SplitFeatures
+;
+
+SchemaTypeMergeSpec:
+  ref1=ValidId ',' ref2=ValidId 'INTO' name=ValidId 'WHERE' condition=ConditionDecl
+;
+
+SchemaTypeDelVarSpec:
+  ref=ValidId '::' 'v'? target=VariationIdSpec
+;
+
+SchemaTypeAdaptSpec:
+  ref=ValidId '::' 'v'? source=VariationIdSpec 'TO' 'v'? target=VariationIdSpec
+;
+
+SchemaTypeUnionSpec:
+  ref=ValidId
+;
+////////////////////// Entity operations ///////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////// Feature operations //////////////////////
+
+FeatureDeleteSpec:
+  selector=MultipleFeatureSelector
+;
+
+FeatureRenameSpec:
+  selector=SingleFeatureSelector 'TO' name=QualifiedName
+;
+
+FeatureAllocateSpec:
+  sourceSelector=SingleFeatureSelector 'TO' targetSelector=SingleFeatureSelector 'WHERE' condition=ConditionDecl
+;
+
+FeatureNestSpec:
+  selector=MultipleFeatureSelector 'TO' name=QualifiedName
+;
+
+FeatureUnnestSpec:
+  selector=MultipleFeatureSelector
+;
+
+////////////////////// Feature operations //////////////////////
+////////////////////////////////////////////////////////////////
+///////////////////// Attribute operations /////////////////////
+
+AttributeAddSpec:
+  ( key?='+' | ( ( optional?='?' )? ( unique?='!' )? ) ) selector=SingleFeatureSelector ( ':' type=DataType ( '(' defaultValue=DefaultValue ')' )? )?
+;
+
+AttributeOrReferenceCastSpec:
+  selector=MultipleFeatureSelector 'TO' type=SinglePrimitiveType
+;
+
+AttributePromoteSpec:
+  selector=MultipleFeatureSelector
+;
+
+AttributeDemoteSpec:
+  selector=MultipleFeatureSelector
+;
+
+//////////////////// Attribute operations //////////////////////
+////////////////////////////////////////////////////////////////
+//////////////////// Reference operations //////////////////////
+
+ReferenceAddSpec:
+  ( optional?='?' )? selector=SingleFeatureSelector ':' // Optional?
+    (
+      ( type=SinglePrimitiveType ( '(' defaultValue=DefaultValue ')' )? ) // But is type necessary?
+      |
+      ( 'feat' 'by' featuredBy=ValidId ( '(' 'v'? variations+=VariationIdSpec ( ',' 'v'? variations+=VariationIdSpec )* ')' )? )
+      |
+      ( '{' ( features+=SimpleDataFeature (',' features+=SimpleDataFeature )* )? '}' )
+    ) multiplicity=('?'|'&'|'*'|'+') 'TO' ref=ValidId ( 'WHERE' condition=ConditionDecl )?
+;
+
+ReferenceOrAggregateMultiplicitySpec:
+  selector=MultipleFeatureSelector 'TO' multiplicity=('?'|'&'|'*'|'+')
+;
+
+ReferenceMorphSpec:
+  selector=SingleFeatureSelector ( '(' ( deleteId?='rmId' )? ( deleteEntity?='rmEntity' )? ')' )? 'TO' name=ValidId
+;
+
+//////////////////// Reference operations //////////////////////
+////////////////////////////////////////////////////////////////
+//////////////////// Aggregate operations //////////////////////
+
+AggregateAddSpec:
+  ( optional?='?' )? selector=SingleFeatureSelector ':' '{' features+=SimpleDataFeature (',' features+=SimpleDataFeature )* '}' multiplicity=('?'|'&'|'*'|'+') ( 'AS' name=ValidId )?
+;
+
+AggregateMorphSpec:
+  selector=SingleFeatureSelector 'TO' name=ValidId
+;
+
+//////////////////// Aggregate operations //////////////////////
+////////////////////////////////////////////////////////////////
+////////////////////////// Other stuff /////////////////////////
+
+FeatureSelector:
+  SingleFeatureSelector | MultipleFeatureSelector
+;
+
+SingleFeatureSelector:
+  ( ( ref=ValidId ( '(' 'v'? variations+=VariationIdSpec ( ',' 'v'? variations+=VariationIdSpec )* ')' )? ) | forAll?='*' ) '::' target=QualifiedName
+;
+
+MultipleFeatureSelector:
+  ( ( ref=ValidId ( '(' 'v'? variations+=VariationIdSpec ( ',' 'v'? variations+=VariationIdSpec )* ')' )? ) | forAll?='*' ) '::' targets+=QualifiedName ( ',' targets+=QualifiedName )*
+;
+
+SimpleDataFeature:
+  ( key?='+' | ( ( optional?='?' )? ( unique?='!' )? ) ) name=QualifiedName ( ':' type=DataType ( '(' defaultValue=DefaultValue ')' )? )?
+;
+
+SplitFeatures:
+  '(' features+=QualifiedName (',' features+=QualifiedName)* ')'
+;
+
+DefaultValue:
+  EString | EDouble | EInt | EBoolean
+;
+
+EDouble returns ecore::EDouble:
+  '-' ? INT '.' INT
+;
+
+EString returns ecore::EString:
+  STRING
+;
+
+EBoolean returns ecore::EBoolean:
+  'true' | 'false'
+;
+
+ConditionDecl:
+  c1=QualifiedName '=' c2=QualifiedName// Condition hierarchy ( op=('&&'|'||') '(' c3=ConditionDecl ')' )?
+;
+
+QualifiedName: ValidId ( '.' ValidId )*;
+
+@Override
+KEYWORD: 'EBlock' | 'ADD' | 'DELETE' | 'RENAME' | 'SPLIT' | 'EXTRACT' | 'MERGE' | 'COPY' | 'MOVE' | 'NEST' | 'UNNEST' |
+         'ATTR' | 'CAST' | 'MULT' | 'MORPH' | 'TO' | 'INTO' | 'WHERE' | 'true' | 'false' | Athena::KEYWORD
+;

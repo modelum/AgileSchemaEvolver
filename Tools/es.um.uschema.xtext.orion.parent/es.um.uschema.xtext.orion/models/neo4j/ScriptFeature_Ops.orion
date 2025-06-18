@@ -1,0 +1,29 @@
+Neo4jScriptFeature_Ops operations
+
+SCRIPT MODE
+
+ADD ENTITY EntityToRemove: { id: String, attrToDel: String, attrToDelStr: String, attrToDelNum: Number, attrToDelDouble: Double, attrToDelBool: Boolean,
+    attrToRenStr: String, attrToRenNum: Number, attrToRenDouble: Double, attrToRenBool: Boolean}
+
+DELETE EntityToRemove::attrToDel, attrToDelStr, attrToDelNum, attrToDelDouble, attrToDelBool
+
+RENAME EntityToRemove::attrToRenStr TO attrTrue1
+RENAME EntityToRemove::attrToRenNum TO attrTrue2
+RENAME EntityToRemove::attrToRenDouble TO attrTrue3
+RENAME EntityToRemove::attrToRenBool TO attrTrue4
+
+ADD ENTITY EntityToCopySource1: { id: String("id1"), valueToCopy1: String("COPY_THIS"), valueToCopy2: List }
+ADD ENTITY EntityToCopySource2: { id: String("id2"), valueToCopy3: String("COPY_THAT")}
+ADD ENTITY EntityToCopyTarget: { id: String, thisRef: String("id1"), thatRef: String("id2") }
+
+COPY EntityToCopySource1::valueToCopy1 TO EntityToCopyTarget::copy1 WHERE id = thisRef
+COPY EntityToCopySource1::valueToCopy2 TO EntityToCopyTarget::copy2 WHERE id = thisRef
+COPY EntityToCopySource2::valueToCopy3 TO EntityToCopyTarget::valueToCopy3 WHERE id = thatRef
+
+ADD ENTITY EntityToMoveSource1: { id: String("id1"), valueToMove1: String("MOVE_THIS"), valueToMove2: List }
+ADD ENTITY EntityToMoveSource2: { id: String("id2"), valueToMove3: String("MOVE_THAT")}
+ADD ENTITY EntityToMoveTarget: { id: String, thisRef: String("id1"), thatRef: String("id2") }
+
+MOVE EntityToMoveSource1::valueToMove1 TO EntityToMoveTarget::move1 WHERE id = thisRef
+MOVE EntityToMoveSource1::valueToMove2 TO EntityToMoveTarget::move2 WHERE id = thisRef
+MOVE EntityToMoveSource2::valueToMove3 TO EntityToMoveTarget::move3 WHERE id = thisRef

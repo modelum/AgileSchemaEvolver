@@ -1,0 +1,17 @@
+Neo4jScriptReference_Ops operations
+
+SCRIPT MODE
+
+ADD ENTITY EntityReferenced: { attr: String }
+ADD ENTITY EntityReferences: { attr: String }
+
+ADD RELATIONSHIP Relationship1
+ADD RELATIONSHIP Relationship2: { attr: String }
+
+ADD REF EntityReferences::REF1: feat by Relationship2 & TO EntityReferenced
+ADD REF EntityReferences::REF2: {attr1: String, attr2: String } & TO EntityReferenced
+
+ADD REF EntityReferences::REF3: feat by Relationship2 + TO EntityReferenced
+ADD REF EntityReferences::REF4: {attr1: String, attr2: String } + TO EntityReferenced
+
+//ADD REF EntityReferences::REF5: {}& TO EntityReferenced

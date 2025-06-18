@@ -1,0 +1,77 @@
+Schema Umugram:1
+
+root entity UserUmugram
+{
+  +user_id: String,
+  username: String,
+  !email: String /^.+@.+\\.com$/,
+  password: String,
+  created_at: Timestamp,
+  updated_at: Timestamp,
+  profile: aggr<Profile>&,
+  birthday: Timestamp
+}
+
+root entity User_Metadata
+{
+  +user_id: String,
+  created_at: Timestamp,
+  updated_at: Timestamp
+}
+
+entity Profile
+{
+  nameProfile: String,
+  avatar_url: String,
+  description: String,
+  website: String
+}
+
+root entity Post
+{
+  +post_id: String,
+  caption: String,
+  description: String,
+  created_at: Timestamp,
+  updated_at: Timestamp,
+  user_id: ref<UserUmugram as String>&,
+  +revision: int
+}
+
+root entity VideoPost
+{
+  +videopost_id: String,
+  videoUrl: String,
+  seconds: int,
+  post_id: ref<Post as String>&,
+  lastMinute: Timestamp
+}
+
+root entity PhotoPost
+{
+  +photopost_id: String,
+  photoUrl: String,
+  post_id: ref<Post as String>&
+}
+
+root entity Comment
+{
+  +comment_id: String,
+  text: String,
+  created_at: Timestamp,
+  updated_at: Timestamp,
+  user_id: ref<UserUmugram as String>&,
+  replyTo: ref<Comment as String>&,
+  post_id: ref<Post as String>&,
+  hastag: List<String>
+}
+
+relationship Followers
+{
+  common
+  {
+    follower_id: ref<UserUmugram as String>&,
+    following_id: ref<UserUmugram as String>&
+  }
+  variation 1
+}

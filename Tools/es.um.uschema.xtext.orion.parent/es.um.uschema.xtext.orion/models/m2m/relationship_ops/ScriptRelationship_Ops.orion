@@ -1,0 +1,22 @@
+ScriptRelationship_Ops operations
+
+SCRIPT MODE
+
+ADD RELATIONSHIP RelationshipAdded1: { id: Identifier }
+ADD RELATIONSHIP RelationshipAdded2: { id: Identifier }
+ADD RELATIONSHIP RelationshipAdded3: { id: Identifier }
+
+DELETE RELATIONSHIP RelationshipAdded2
+RENAME RELATIONSHIP RelationshipAdded3 TO RelationshipRenamed
+
+ADD RELATIONSHIP RelationshipToSplit: { attr1: String, attr2: String, attr3: String, attr4: String, attr5: String, attr6: String}
+SPLIT RELATIONSHIP RelationshipToSplit INTO RelationshipSplit1(attr1, attr2, attr3), RelationshipSplit2(attr1, attr5, attr6)
+
+ADD RELATIONSHIP RelationshipToMerge1: { +id: String("id"), a: String, b: Number }
+ADD RELATIONSHIP RelationshipToMerge2: { +id: String("id"), c: List, b }
+MERGE RELATIONSHIP RelationshipToMerge1, RelationshipToMerge2 INTO RelationshipMerged WHERE RelationshipToMerge1.id = RelationshipToMerge2.id
+
+ADD RELATIONSHIP RelationshipToExtract: { feat1, feat2, feat3, feat4 }
+EXTRACT RELATIONSHIP RelationshipToExtract INTO RelationshipExtracted( feat2, feat4 )
+
+// We will not test variation operations here because we cannot create variations directly with ADD ENTITY

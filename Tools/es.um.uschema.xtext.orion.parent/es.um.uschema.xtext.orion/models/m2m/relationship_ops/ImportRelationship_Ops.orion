@@ -1,0 +1,36 @@
+ImportRelationship_Ops operations
+
+USING RelationshipSchema:1
+
+ADD RELATIONSHIP RelationshipToAdd_1: { attr: String }
+ADD RELATIONSHIP RelationshipToAdd_2: { attr: String }
+
+DELETE RELATIONSHIP RelationshipToDel_1
+DELETE RELATIONSHIP RelationshipToDel_2
+
+RENAME RELATIONSHIP RelationshipToRename_1 TO RelationshipRenamed_1
+RENAME RELATIONSHIP RelationshipToRename_2 TO RelationshipRenamed_2
+
+EXTRACT RELATIONSHIP RelationshipToExtract_1 INTO RelationshipExtracted_1(attr1, attr3)
+EXTRACT RELATIONSHIP RelationshipToExtract_2 INTO RelationshipExtracted_2(attr1, attr3)
+
+SPLIT RELATIONSHIP RelationshipToSplit_1 INTO RelationshipSplit11(attr1, attr3), RelationshipSplit12(attr1, attr2)
+SPLIT RELATIONSHIP RelationshipToSplit_2 INTO RelationshipSplit21(attr1, attr3), RelationshipSplit22(attr1, attr2)
+
+MERGE RELATIONSHIP RelationshipToMerge_1, RelationshipToMerge_2 INTO RelationshipMerged WHERE RelationshipToMerge_1.key = RelationshipToMerge_2.key
+
+DELVAR RELATIONSHIP RelationshipToDelVar_1::33
+DELVAR RELATIONSHIP RelationshipToDelVar_2::2
+
+ADAPT RELATIONSHIP RelationshipToAdapt_1::v 33 TO v 125
+ADAPT RELATIONSHIP RelationshipToAdapt_2::2 TO 45
+ADAPT RELATIONSHIP RelationshipToAdapt_2::2 TO 3
+
+UNION RELATIONSHIP RelationshipToUnion_1
+UNION RELATIONSHIP RelationshipToUnion_2
+
+ADD REF EntityReferences::ref1: String+ TO EntityReferenced
+ADD REF EntityReferences::ref2: feat by Relationship1+ TO EntityReferenced
+ADD REF EntityReferences::ref3: feat by Relationship2(1)+ TO EntityReferenced
+ADD REF EntityReferences::ref4: feat by Relationship2(1, 2)+ TO EntityReferenced
+ADD REF EntityReferences::ref5: { attr1, attr2, attr3 }+ TO EntityReferenced

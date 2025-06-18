@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" name="athena" version="12.0.0.2017041100">
+  <ownedViewpoints name="Athena">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="Athena schema" titleExpression="aql: 'Athena schema - ' + self.id.name + ':' + self.id.version" domainClass="athena::AthenaSchema" enablePopupBars="true">
+      <metamodel href="http://www.um.es/uschema/xtext/athena/Athena#/"/>
+      <defaultLayer name="Default">
+        <edgeMappings name="ReferenceFromRegularEntity" sourceMapping="//@ownedViewpoints[name='Athena']/@ownedRepresentations[name='Athena%20schema']/@defaultLayer/@containerMappings[name='RegularEntity']" targetMapping="//@ownedViewpoints[name='Athena']/@ownedRepresentations[name='Athena%20schema']/@defaultLayer/@containerMappings[name='RegularEntity'] //@ownedViewpoints[name='Athena']/@ownedRepresentations[name='Athena%20schema']/@defaultLayer/@containerMappings[name='ShortEntity']" targetFinderExpression="aql: self.variations.structure.spec.features->union(self.common.structure.spec.features)->filter(athena::SimpleFeature).type.ref">
+          <style routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <centerLabelStyleDescription labelSize="12" labelExpression="aql: self.variations.structure.spec.features->union(self.common.structure.spec.features)->filter(athena::SimpleFeature)->select(ref | ref.type.ref=view.targetNode.target)->asSet()->collect(ref | ref.name + ': ' + ref.type.type.typename + ' [' + if (ref.type.multiplicity='?' or ref.type.multiplicity='*') then '0' else '1' endif + '..' + if (ref.type.multiplicity='?' or ref.type.multiplicity='&amp;') then '1' else '*' endif + ']')->sep('\n')->toString()" iconPath="/es.um.uschema.xtext.athena.design/icons/ref.png">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="ReferenceFromShortEntity" sourceMapping="//@ownedViewpoints[name='Athena']/@ownedRepresentations[name='Athena%20schema']/@defaultLayer/@containerMappings[name='ShortEntity']" targetMapping="//@ownedViewpoints[name='Athena']/@ownedRepresentations[name='Athena%20schema']/@defaultLayer/@containerMappings[name='RegularEntity'] //@ownedViewpoints[name='Athena']/@ownedRepresentations[name='Athena%20schema']/@defaultLayer/@containerMappings[name='ShortEntity']" targetFinderExpression="aql: self.structure.spec.features->filter(athena::SimpleFeature).type.ref">
+          <style routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <centerLabelStyleDescription labelSize="12" labelExpression="aql: self.structure.spec.features->filter(athena::SimpleFeature)->select(ref | ref.type.ref=view.targetNode.target)->asSet()->collect(ref | ref.name + ': ' + ref.type.type.typename + ' [' + if (ref.type.multiplicity='?' or ref.type.multiplicity='*') then '0' else '1' endif + '..' + if (ref.type.multiplicity='?' or ref.type.multiplicity='&amp;') then '1' else '*' endif + ']')->sep('\n')->toString()" iconPath="/es.um.uschema.xtext.athena.design/icons/ref.png">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="AggregateFromRegularEntity" sourceMapping="//@ownedViewpoints[name='Athena']/@ownedRepresentations[name='Athena%20schema']/@defaultLayer/@containerMappings[name='RegularEntity']" targetMapping="//@ownedViewpoints[name='Athena']/@ownedRepresentations[name='Athena%20schema']/@defaultLayer/@containerMappings[name='RegularEntity'] //@ownedViewpoints[name='Athena']/@ownedRepresentations[name='Athena%20schema']/@defaultLayer/@containerMappings[name='ShortEntity']" targetFinderExpression="aql: self.variations.structure.spec.features->union(self.common.structure.spec.features)->filter(athena::SimpleFeature).type.aggr">
+          <style sourceArrow="FillDiamond" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <centerLabelStyleDescription labelSize="12" labelExpression="aql: self.variations.structure.spec.features->union(self.common.structure.spec.features)->filter(athena::SimpleFeature)->select(aggr | aggr.type.aggr->includes(view.targetNode.target))->asSet()->collect(aggr | aggr.name + ' [' + if (aggr.type.multiplicity='?' or aggr.type.multiplicity='*') then '0' else '1' endif + '..' + if (aggr.type.multiplicity='?' or aggr.type.multiplicity='&amp;') then '1' else '*' endif + ']')->sep('\n')->toString()" iconPath="/es.um.uschema.xtext.athena.design/icons/aggr.png">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="AggregateFromShortEntity" sourceMapping="//@ownedViewpoints[name='Athena']/@ownedRepresentations[name='Athena%20schema']/@defaultLayer/@containerMappings[name='ShortEntity']" targetMapping="//@ownedViewpoints[name='Athena']/@ownedRepresentations[name='Athena%20schema']/@defaultLayer/@containerMappings[name='RegularEntity'] //@ownedViewpoints[name='Athena']/@ownedRepresentations[name='Athena%20schema']/@defaultLayer/@containerMappings[name='ShortEntity']" targetFinderExpression="aql: self.structure.spec.features->filter(athena::SimpleFeature).type.aggr">
+          <style sourceArrow="FillDiamond" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <centerLabelStyleDescription labelSize="12" labelExpression="aql: self.structure.spec->filter(athena::SimpleFeature)->select(aggr | aggr.type.aggr->includes(view.targetNode.target))->asSet()->collect(aggr | aggr.name + ' [' + if (aggr.type.multiplicity='?' or aggr.type.multiplicity='*') then '0' else '1' endif + '..' + if (aggr.type.multiplicity='?' or aggr.type.multiplicity='&amp;') then '1' else '*' endif + ']')->sep('\n')->toString()" iconPath="/es.um.uschema.xtext.athena.design/icons/aggr.png">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <containerMappings name="ShortEntity" semanticCandidatesExpression="aql: self.entities" domainClass="athena::ShortEntityDecl" childrenPresentation="VerticalStack">
+          <subContainerMappings name="Commons" semanticCandidatesExpression="aql: self" domainClass="athena::ShortEntityDecl" childrenPresentation="List">
+            <subNodeMappings name="SimpleFeature" semanticCandidatesExpression="aql: self.structure.spec.features->filter(athena::SimpleFeature)->select(f | not f.optional)" domainClass="athena::SimpleFeature">
+              <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name" iconPath="/es.um.uschema.xtext.athena.design/icons/unknown.png" labelPosition="node" resizeKind="NSEW">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+              <conditionnalStyles predicateExpression="aql: self.key">
+                <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': ' + self.type.typename" iconPath="/es.um.uschema.xtext.athena.design/icons/key.png" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                </style>
+              </conditionnalStyles>
+              <conditionnalStyles predicateExpression="aql: self.type.ref">
+                <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': ' + if (self.type.type &lt;> null) then self.type.type.typename else '' endif + ' [' + if (self.type.multiplicity='?' or self.type.multiplicity='*') then '0' else '1' endif + '..' + if (self.type.multiplicity='?' or self.type.multiplicity='&amp;') then '1' else '*' endif + '] ' + self.type.ref.name" iconPath="/es.um.uschema.xtext.athena.design/icons/ref.png" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                </style>
+              </conditionnalStyles>
+              <conditionnalStyles predicateExpression="aql: self.type.aggr">
+                <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': [' + if (self.type.multiplicity='?' or self.type.multiplicity='*') then '0' else '1' endif + '..' + if (self.type.multiplicity='?' or self.type.multiplicity='&amp;') then '1' else '*' endif + '] ' + self.type.aggr->collect(a | a.name)" iconPath="/es.um.uschema.xtext.athena.design/icons/aggr.png" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                </style>
+              </conditionnalStyles>
+              <conditionnalStyles predicateExpression="aql: self.type.typename">
+                <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': ' + self.type.typename" iconPath="/es.um.uschema.xtext.athena.design/icons/primitive.png" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                </style>
+              </conditionnalStyles>
+              <conditionnalStyles predicateExpression="aql: self.type.elementType">
+                <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': List&lt;' + self.type.elementType.typename + '>'" iconPath="/es.um.uschema.xtext.athena.design/icons/list.png" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                </style>
+              </conditionnalStyles>
+            </subNodeMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql: 'Required'" backgroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM2']" foregroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM2']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </subContainerMappings>
+          <subContainerMappings name="Optionals" preconditionExpression="aql: self.structure.spec.features->filter(athena::SimpleFeature)->exists(f | f.optional)" semanticCandidatesExpression="aql: self" domainClass="athena::ShortEntityDecl" childrenPresentation="List">
+            <subNodeMappings name="SimpleFeature" semanticCandidatesExpression="aql: self.structure.spec.features->filter(athena::SimpleFeature)->select(f | f.optional)" domainClass="athena::SimpleFeature">
+              <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name" labelPosition="node" resizeKind="NSEW">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+            </subNodeMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql: 'Optional'" backgroundColor="//@userColorsPalettes[name='Palette']/@entries[name='Caqui1']" foregroundColor="//@userColorsPalettes[name='Palette']/@entries[name='Caqui1']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </subContainerMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:  'Entity: ' + self.name" iconPath="/es.um.uschema.xtext.athena.design/icons/entity.png" backgroundStyle="GradientTopToBottom" backgroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM2']" foregroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM2']">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          </style>
+          <conditionnalStyles predicateExpression="aql: self.root">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:  'Root Entity: ' + self.name" iconPath="/es.um.uschema.xtext.athena.design/icons/entity.png" backgroundStyle="GradientTopToBottom" backgroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM1']" foregroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM1']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </conditionnalStyles>
+        </containerMappings>
+        <containerMappings name="RegularEntity" semanticCandidatesExpression="aql: self.entities" domainClass="athena::RegularEntityDecl" childrenPresentation="HorizontalStack">
+          <subContainerMappings name="Commons" semanticCandidatesExpression="aql: self" domainClass="athena::RegularEntityDecl" childrenPresentation="List">
+            <subNodeMappings name="SimpleFeature" semanticCandidatesExpression="aql: self.common.structure.spec.features->filter(athena::SimpleFeature)" domainClass="athena::SimpleFeature">
+              <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name" iconPath="/es.um.uschema.xtext.athena.design/icons/unknown.png" labelPosition="node" resizeKind="NSEW">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+              <conditionnalStyles predicateExpression="aql: self.key">
+                <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': ' + self.type.typename" iconPath="/es.um.uschema.xtext.athena.design/icons/key.png" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                </style>
+              </conditionnalStyles>
+              <conditionnalStyles predicateExpression="aql: self.type.ref">
+                <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': ' + if (self.type.type &lt;> null) then self.type.type.typename else '' endif + ' [' + if (self.type.multiplicity='?' or self.type.multiplicity='*') then '0' else '1' endif + '..' + if (self.type.multiplicity='?' or self.type.multiplicity='&amp;') then '1' else '*' endif + '] ' + self.type.ref.name" iconPath="/es.um.uschema.xtext.athena.design/icons/ref.png" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                </style>
+              </conditionnalStyles>
+              <conditionnalStyles predicateExpression="aql: self.type.aggr">
+                <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': [' + if (self.type.multiplicity='?' or self.type.multiplicity='*') then '0' else '1' endif + '..' + if (self.type.multiplicity='?' or self.type.multiplicity='&amp;') then '1' else '*' endif + '] ' + self.type.aggr->collect(a | a.name)" iconPath="/es.um.uschema.xtext.athena.design/icons/aggr.png" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                </style>
+              </conditionnalStyles>
+              <conditionnalStyles predicateExpression="aql: self.type.typename">
+                <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': ' + self.type.typename" iconPath="/es.um.uschema.xtext.athena.design/icons/primitive.png" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                </style>
+              </conditionnalStyles>
+              <conditionnalStyles predicateExpression="aql: self.type.elementType">
+                <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': List&lt;' + self.type.elementType.typename + '>'" iconPath="/es.um.uschema.xtext.athena.design/icons/list.png" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                </style>
+              </conditionnalStyles>
+            </subNodeMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql: 'Required'" backgroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM2']" foregroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM2']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </subContainerMappings>
+          <subContainerMappings name="Variations" preconditionExpression="aql: self.variations->notEmpty()" semanticCandidatesExpression="aql: self" domainClass="athena::RegularEntityDecl">
+            <subContainerMappings name="Variation" semanticCandidatesExpression="aql: self.variations" domainClass="athena::VariationDecl" childrenPresentation="List">
+              <subNodeMappings name="SimpleFeature" semanticCandidatesExpression="aql: self.structure.spec.features->filter(athena::SimpleFeature)" domainClass="athena::SimpleFeature">
+                <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name" iconPath="/es.um.uschema.xtext.athena.design/icons/unknown.png" labelPosition="node" resizeKind="NSEW">
+                  <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                </style>
+                <conditionnalStyles predicateExpression="aql: self.key">
+                  <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': ' + self.type.typename" iconPath="/es.um.uschema.xtext.athena.design/icons/key.png" labelPosition="node" resizeKind="NSEW">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  </style>
+                </conditionnalStyles>
+                <conditionnalStyles predicateExpression="aql: self.type.ref">
+                  <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': ' + if (self.type.type &lt;> null) then self.type.type.typename else '' endif + ' [' + if (self.type.multiplicity='?' or self.type.multiplicity='*') then '0' else '1' endif + '..' + if (self.type.multiplicity='?' or self.type.multiplicity='&amp;') then '1' else '*' endif + '] ' + self.type.ref.name" iconPath="/es.um.uschema.xtext.athena.design/icons/ref.png" labelPosition="node" resizeKind="NSEW">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  </style>
+                </conditionnalStyles>
+                <conditionnalStyles predicateExpression="aql: self.type.aggr">
+                  <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': [' + if (self.type.multiplicity='?' or self.type.multiplicity='*') then '0' else '1' endif + '..' + if (self.type.multiplicity='?' or self.type.multiplicity='&amp;') then '1' else '*' endif + '] ' + self.type.aggr->collect(a | a.name)" iconPath="/es.um.uschema.xtext.athena.design/icons/aggr.png" labelPosition="node" resizeKind="NSEW">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  </style>
+                </conditionnalStyles>
+                <conditionnalStyles predicateExpression="aql: self.type.typename">
+                  <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': ' + self.type.typename" iconPath="/es.um.uschema.xtext.athena.design/icons/primitive.png" labelPosition="node" resizeKind="NSEW">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  </style>
+                </conditionnalStyles>
+                <conditionnalStyles predicateExpression="aql: self.type.elementType">
+                  <style xsi:type="style:CustomStyleDescription" labelSize="12" labelExpression="aql: self.name + ': List&lt;' + self.type.elementType.typename + '>'" iconPath="/es.um.uschema.xtext.athena.design/icons/list.png" labelPosition="node" resizeKind="NSEW">
+                    <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                    <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                  </style>
+                </conditionnalStyles>
+              </subNodeMappings>
+              <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql: self.eContainer().name + ' ' + self.name" iconPath="/es.um.uschema.xtext.athena.design/icons/variation.png" backgroundColor="//@userColorsPalettes[name='Palette']/@entries[name='Caqui2']" foregroundColor="//@userColorsPalettes[name='Palette']/@entries[name='Caqui2']">
+                <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+                <labelFormat>bold</labelFormat>
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              </style>
+            </subContainerMappings>
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" showIcon="false" labelExpression="aql: 'Variations'" backgroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM2']" foregroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM2']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </subContainerMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:  'Entity: ' + self.name" iconPath="/es.um.uschema.xtext.athena.design/icons/entity.png" backgroundStyle="GradientTopToBottom" backgroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM2']" foregroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM2']">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+          </style>
+          <conditionnalStyles predicateExpression="aql: self.root">
+            <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="12" labelExpression="aql:  'Root Entity: ' + self.name" iconPath="/es.um.uschema.xtext.athena.design/icons/entity.png" backgroundStyle="GradientTopToBottom" backgroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM1']" foregroundColor="//@userColorsPalettes[name='Palette']/@entries[name='AguaM1']">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            </style>
+          </conditionnalStyles>
+        </containerMappings>
+      </defaultLayer>
+    </ownedRepresentations>
+    <ownedJavaExtensions qualifiedClassName="es.um.uschema.xtext.athena.design.services.SimpleFeatures"/>
+  </ownedViewpoints>
+  <userColorsPalettes name="Palette">
+    <entries xsi:type="description:UserFixedColor" red="175" green="244" blue="244" name="AguaM1"/>
+    <entries xsi:type="description:UserFixedColor" red="200" green="244" blue="244" name="AguaM2"/>
+    <entries xsi:type="description:UserFixedColor" red="255" green="233" blue="117" name="Caqui1"/>
+    <entries xsi:type="description:UserFixedColor" red="255" green="244" blue="186" name="Caqui2"/>
+    <entries xsi:type="description:UserFixedColor" red="255" green="92" blue="171" name="Magen1"/>
+    <entries xsi:type="description:UserFixedColor" red="255" green="174" blue="213" name="Magen2"/>
+  </userColorsPalettes>
+</description:Group>

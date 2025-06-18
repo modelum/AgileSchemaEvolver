@@ -1,0 +1,112 @@
+Umugram operations
+
+SCRIPT MODE
+
+// This script is used to perform operations on Umugram
+
+// CREATE OPERATIONS
+
+// CREATE A USER
+ADD ENTITY User: { 
+	+user_id: String, 
+	username: String, 
+	!email: String /^.+@.+\\.com$/, 
+	password: String,
+	created_at: Timestamp,
+	updated_at: Timestamp
+}
+
+/* Data for use in extract
+INSERT INTO USER (created_at, email, password, updated_at, user_id, username) VALUES
+('2024-01-15 08:23:45', 'alice.smith@example.com', 'P@ssw0rd1', '2024-03-01 12:00:00', 'u001', 'alice_smith'),
+('2024-02-10 14:05:12', 'bob.johnson@example.com', 'Secr3tKey!',   '2024-03-02 09:30:15', 'u002', 'bobj'),
+('2024-03-05 19:47:30', 'carla98@example.com',     'MyPa$$123',    '2024-03-05 20:00:00', 'u003', 'carla98'),
+('2024-03-20 11:12:00', 'daniel.k@example.com',    'Qwerty!234',   '2024-03-21 08:45:00', 'u004', 'danielk'),
+('2024-04-01 07:00:00', 'eva.green@example.com',   'Green$Eva56',  '2024-04-02 16:20:00', 'u005', 'evagreen');
+*/
+
+
+// EXTRACT METADATA OF USER
+EXTRACT ENTITY User INTO User_Metadata(user_id, created_at, updated_at)
+
+
+// CREATE A PROFILE
+ADD AGGR User::profile: {
+	nameProfile: String, 
+	avatar_url: String,
+	description: String,
+	website: String
+}&
+
+// CREATE RELATIONSHIP FOLLOWERS, NOT VALID WITHOUT AT LEAST ONE FIELD
+ADD RELATIONSHIP Followers
+
+// CREATE TABLA POST
+ADD ENTITY Post: {
+	+post_id: String,
+	caption: String,
+	description: String,
+	created_at: Timestamp,
+	updated_at: Timestamp
+}
+
+// CREATE TABLA VIDEOPOST
+ADD ENTITY VideoPost: {
+	+videopost_id: String,
+	videoUrl: String,
+	duration: double
+}
+
+// CREATE TABLA PHOTOPOST
+ADD ENTITY PhotoPost: {
+	+photopost_id: String,
+	photoUrl: String
+}
+
+// CREATE TABLA LIVEPOST
+ADD ENTITY LivePost: {
+	+realpost_id: String,
+	+duration : Timestamp
+}
+
+// CREATE TABLE COMMENT
+ADD ENTITY Comment: {
+	+comment_id: String,
+	text: String,
+	created_at: Timestamp,
+	updated_at: Timestamp
+}
+
+// ADD REFERENCES
+ADD REF Post::user_id : String& TO User
+ADD REF VideoPost::post_id : String& TO Post
+ADD REF PhotoPost::post_id : String& TO Post
+ADD REF Comment::user_id : String& TO User
+ADD REF Comment::replyTo : String& TO Comment
+ADD REF Comment::post_id : String& TO Post
+
+// ADD RELATIONSHIP REFERENCES
+ADD REF Followers::follower_id : String& TO User
+ADD REF Followers::following_id : String& TO User
+
+// CAST ATTR DURATION 
+CAST ATTR VideoPost::duration TO int
+
+// RENAME ATTR
+RENAME VideoPost::duration TO seconds
+
+// ADD ATTRS
+ADD ATTR User::birthday : Timestamp
+ADD ATTR VideoPost::lastMinute : Timestamp
+ADD ATTR Comment::hastag : List<String>
+ADD ATTR Post::revision : int
+
+// PROMOTE ATTR 
+PROMOTE ATTR Post::revision
+
+// RENAME ENTITY
+RENAME ENTITY User TO UserUmugram
+
+// DELETE ENTITY
+DELETE ENTITY LivePost
+
