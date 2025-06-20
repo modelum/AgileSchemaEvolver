@@ -18,7 +18,7 @@ This project has developed an innovative toolset to support agile and safe datab
 que demuestra cómo realizar una integración continua con una herramienta predictora mediante el lenguaje Orion. También se proporciona 
 un genererador de Orion a MySQL encargado de las migraciones de esquema.
 
-# Mi proyecto
+# Estructure 
 
 - 📁 **.github**
   - 📁 codeql
