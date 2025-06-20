@@ -1,7 +1,7 @@
 # AgileSchemaEvolver
 A data model-independent tooling aimed to the agile schema evolution of NoSQL and relational databases, which is based on the U-Schema unified generic metamodel (Project PID2020-117391GB-I00, Ministerio de Ciencia, Innovación y Universidades, España)
 
-# Proyect
+# Project
 
 This repository includes the main results achieved in the project proyecto **"An agile approach to evolve NoSQL and Relational schemas: data and code migration"**, project PID2020-117391GB-I00, (september, 2021 to february,2025) found by the Spanish Ministry of Science and Universities, who is made by Modelum Group on University of Murcia, which IP is Jesús J. García Molina.
 
