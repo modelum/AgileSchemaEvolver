@@ -12,6 +12,10 @@ This project has developed an innovative toolset to support agile and safe datab
      The approach has been validated through real-world datasets and case studies, resulting in international publications, open-source prototypes, and academic contributions. Overall, the project advances the capabilities available for database evolution in modern application development environments.
      Recently, we have also started to explore the use of Large Language Models (LLMs) to assist in the generation of Athena schemas and Orion evolution scripts from natural language descriptions, opening new opportunities for future research and tooling.
 
+
+que demuestra cómo realizar una integración continua con una herramienta predictora mediante el lenguaje Orion. También se proporciona 
+un genererador de Orion a MySQL encargado de las migraciones de esquema.
+
 # Estructure 
 
 - 📁 **.github**
