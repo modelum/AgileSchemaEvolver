@@ -16,6 +16,8 @@ This project has developed an innovative toolset to support agile and safe datab
 que demuestra cómo realizar una integración continua con una herramienta predictora mediante el lenguaje Orion. También se proporciona 
 un genererador de Orion a MySQL encargado de las migraciones de esquema.
 
+comentar trabajo de fabián y adjuntar enlace a repositorio: https://github.com/modelum/LLMigrator-DB
+
 # Estructure 
 
 - 📁 **.github**
@@ -41,6 +43,7 @@ un genererador de Orion a MySQL encargado de las migraciones de esquema.
   - 📄 Thesis-Orion-2023-AlbertoHC.pdf
   - 📄 Thesis-Uschema-2023-CarlosFC.pdf
   - 📄 TFG-OrionFlow-2025-AntonioPS.pdf
+  - 📄 TFG-LLMigrate-DB-2025-FabiánSD.pdf
 
 # Main Components
 
@@ -55,9 +58,9 @@ un genererador de Orion a MySQL encargado de las migraciones de esquema.
    - `version_table.md`: versions table similar to Flyway
 
 3. **Herramientas M2T** (`tools/`)  
-   - **Athena & Orion** (Xtext): DSLs para esquema prescriptivo y operaciones  
-   - **CodeQL Generator**: convierte Orion → JPQL/@Query anotadas → consultas CodeQL  
-   - **U-Schema**: metamodelo unificado relacional/NoSQL  
+   - **Athena & Orion** (Xtext): DSLs for predictive schema and analysis
+   - **CodeQL Generator**: convierte Orion → JPQL/@Query anotated → queries CodeQL  
+   - **U-Schema**: unified metamodel relational/NoSQL  
 
 4. **Caso de uso** (`UseCase/`)  
    - Example app in Java/Spring Boot with Spring Data JPA
