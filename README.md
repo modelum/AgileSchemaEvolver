@@ -15,7 +15,7 @@ The approach has been validated through real-world datasets and case studies, re
 
 Recently, we have also started to explore the use of Large Language Models (LLMs) to automate the database migration [6][7], an also assist in the generation of Athena schemas and Orion evolution scripts from natural language descriptions [8], opening new opportunities for future research and tooling.
 
-** References **
+**References**
 
 [1] Carlos Javier Fernández Candel, Diego Sevilla Ruiz, Jesús Joaquín García Molina: A unified metamodel for NoSQL and relational databases. Inf. Syst. 104: 101898 (2022) [(pdf)](https://www.sciencedirect.com/science/article/pii/S0306437921001149)
 
