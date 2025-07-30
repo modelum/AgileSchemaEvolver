@@ -6,15 +6,25 @@ A data model-independent toolset designed to support agile schema evolution in b
 This repository includes the main results achieved in the project **"An agile approach to evolve NoSQL and Relational schemas: data and code migration"**, developed by the [Modelum group](https://modelum.github.io/) within the project PID2020-117391GB-I00, (september, 2021 to february,2025) funded by the Spanish Ministry of Science, Innovation and Universities. This project has developed an innovative toolset to support agile and safe database evolution, addressing current needs in continuous software delivery and adaptive systems. Traditional database systems often lack flexibility when adapting to evolving application requirements. Our approach enables systematic and controlled schema changes across a range of database technologies, both relational and NoSQL.
 
 At the core of the solution is U-Schema, a unified metamodel [1] that abstracts and represents database schemas independently of the underlying technology. Based on this model, we have designed two domain-specific languages: Athena [2] for schema definition, and Orion [3] for expressing evolution scripts through a formal taxonomy of schema changes. This taxonomy is one of the project’s main theoretical contributions and has been designed to be independent of any specific data model, making it applicable across diverse database paradigms.
-     The tools support schema versioning and automated migration, generating native scripts for widely used database systems such as MongoDB, Cassandra, Neo4j, and MySQL. While automatic rollback is not implemented, the system maintains a complete history of evolution scripts, enabling the recreation of any past schema version when needed.
-     Additionally, we have developed mechanisms for static code analysis (based on CodeQL) that detect application code fragments potentially affected by schema changes—such as JPQL queries or JPA annotations—and report issues using standard formats. These analyses are integrated in CI/CD pipelines through GitHub Actions, helping teams detect and address potential failures early in the development process.
+
+The tools support schema versioning and automated migration, generating native scripts for widely used database systems such as MongoDB, Cassandra, Neo4j, and MySQL. While automatic rollback is not implemented, the system maintains a complete history of evolution scripts, enabling the recreation of any past schema version when needed.
+
+Additionally, we have developed mechanisms for static code analysia, which are based on [CodeQL](https://codeql.github.com/) that detect application code fragments potentially affected by schema changes—such as JPQL queries or JPA annotations—and report issues using standard formats. These analyses are integrated in CI/CD pipelines through GitHub Actions, helping teams detect and address potential failures early in the development process [4][5].
+
      The approach has been validated through real-world datasets and case studies, resulting in international publications, open-source prototypes, and academic contributions. Overall, the project advances the capabilities available for database evolution in modern application development environments.
      Recently, we have also started to explore the use of Large Language Models (LLMs) to assist in the generation of Athena schemas and Orion evolution scripts from natural language descriptions, opening new opportunities for future research and tooling.
 
 ** References **
 [1] Carlos Javier Fernández Candel, Diego Sevilla Ruiz, Jesús Joaquín García Molina: A unified metamodel for NoSQL and relational databases. Inf. Syst. 104: 101898 (2022) [(pdf)](https://www.sciencedirect.com/science/article/pii/S0306437921001149)
-[2] Alberto Hernández Chillón, Diego Sevilla Ruiz, Jesús García Molina: Athena: A Database-Independent Schema Definition Language. ER (Workshops) 2021: 33-42 [(pdf)] (https://modelum.github.io/publications.html)
+
+[2] Alberto Hernández Chillón, Diego Sevilla Ruiz, Jesús García Molina: Athena: A Database-Independent Schema Definition Language. ER (Workshops) 2021: 33-42 [(pdf)](https://modelum.github.io/publications.html)
+
 [3] Alberto Hernández Chillón, Meike Klettke, Diego Sevilla Ruiz, Jesús García Molina:A Generic Schema Evolution Approach for NoSQL and Relational Databases. IEEE Trans. Knowl. Data Eng. 36(7): 2774-2789 (2024) [(pdf)](https://ieeexplore.ieee.org/document/10420500)
+
+[4] Alberto Hernández Chillón, Jesús García Molina, José Ramón Hoyos, María José Ortín, Propagating Schema Changes to Code: An Approach Based on a Unified Data Model. CoMoNoS 2023, under EDBT/ICDT Joint Conference, Ioannina, Greece. [(pdf)](https://modelum.github.io/publications.html)
+
+[5] Antonio Pérez Serrano: OrionFlow: Una herramienta CI para bases de datos. Trabajo Fin de Grado. Facultad de Informática. Universidad de Murcia. Junio 2025 [(pdf)](./TFG-OrionFlow-2025-AntonioPS.pdf)
+
 
 que demuestra cómo realizar una integración continua con una herramienta predictora mediante el lenguaje Orion. También se proporciona 
 un genererador de Orion a MySQL encargado de las migraciones de esquema.
