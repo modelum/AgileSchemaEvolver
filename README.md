@@ -9,11 +9,11 @@ At the core of the solution is U-Schema, a unified metamodel [1] that abstracts 
 
 The tools support schema versioning and automated migration, generating native scripts for widely used database systems such as MongoDB, Cassandra, Neo4j, and MySQL. While automatic rollback is not implemented, the system maintains a complete history of evolution scripts, enabling the recreation of any past schema version when needed.
 
-Additionally, we have developed mechanisms for static code analysia, which are based on [CodeQL](https://codeql.github.com/) that detect application code fragments potentially affected by schema changes—such as JPQL queries or JPA annotations—and report issues using standard formats. These analyses are integrated in CI/CD pipelines through GitHub Actions, helping teams detect and address potential failures early in the development process [4][5].
+Additionally, we have developed mechanisms for static code analysis, which are based on [CodeQL](https://codeql.github.com/) that detect application code fragments potentially affected by schema changes—such as JPQL queries or JPA annotations—and report issues using standard formats. These analyses are integrated in CI/CD pipelines through GitHub Actions, helping teams detect and address potential failures early in the development process [4][5].
 
 The approach has been validated through real-world datasets and case studies, resulting in international publications, open-source prototypes, and academic contributions. Overall, the project advances the capabilities available for database evolution in modern application development environments.
 
-Recently, we have also started to explore the use of Large Language Models (LLMs) to automate the database migration [6][7], an also assist in the generation of Athena schemas and Orion evolution scripts from natural language descriptions, opening new opportunities for future research and tooling [8].
+Recently, we have also started to explore the use of Large Language Models (LLMs) to automate the database migration [6][7], an also assist in the generation of Athena schemas and Orion evolution scripts from natural language descriptions [8], opening new opportunities for future research and tooling.
 
 ** References **
 
@@ -27,16 +27,14 @@ Recently, we have also started to explore the use of Large Language Models (LLMs
 
 [5] Antonio Pérez Serrano: OrionFlow: Una herramienta CI para bases de datos. Trabajo Fin de Grado. Facultad de Informática. Universidad de Murcia. Junio 2025 [(pdf)](./Publication/TFG-OrionFlow-2025-AntonioPS.pdf)
 
-[6] Fabián Sola Durán: “Una herramienta de migración de bases de datos basada en LLM. LLMigrator-DB: automatización de la migración de bases de datos haciendo uso de abstracciones de LLM”. Tutores: María José Ortín Ibañez y José Ramón Hoyos Barceló. TFG, Facultad de Informática, Universidad de Murcia, julio 2025.
+[6] Fabián Sola Durán: “Una herramienta de migración de bases de datos basada en LLM. LLMigrator-DB: automatización de la migración de bases de datos haciendo uso de abstracciones de LLM”. Tutores: María José Ortín Ibañez y José Ramón Hoyos Barceló. TFG, Facultad de Informática, Universidad de Murcia, julio 2025 [(pdf)](./Publication/TFG-Fabian-Sola.pdf)
 
 [7] María-José Ortín-Ibañez, Fabian Sola Durán, José Ramon Hoyos y Jesus Garcia-Molina: Automatización de la Migración de Bases de Datos con Abstracciones de LLM, JISBD-2025, Track de Ingeniería y Ciencia de Datos, Córdoba, septiembre, 2025
 
+[8]
 
 
-que demuestra cómo realizar una integración continua con una herramienta predictora mediante el lenguaje Orion. También se proporciona 
-un genererador de Orion a MySQL encargado de las migraciones de esquema.
-
-comentar trabajo de fabián y adjuntar enlace a repositorio: https://github.com/modelum/LLMigrator-DB
+https://github.com/modelum/LLMigrator-DB
 
 # Estructure 
 
