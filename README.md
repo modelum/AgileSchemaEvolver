@@ -11,10 +11,12 @@ The tools support schema versioning and automated migration, generating native s
 
 Additionally, we have developed mechanisms for static code analysia, which are based on [CodeQL](https://codeql.github.com/) that detect application code fragments potentially affected by schema changes—such as JPQL queries or JPA annotations—and report issues using standard formats. These analyses are integrated in CI/CD pipelines through GitHub Actions, helping teams detect and address potential failures early in the development process [4][5].
 
-     The approach has been validated through real-world datasets and case studies, resulting in international publications, open-source prototypes, and academic contributions. Overall, the project advances the capabilities available for database evolution in modern application development environments.
-     Recently, we have also started to explore the use of Large Language Models (LLMs) to assist in the generation of Athena schemas and Orion evolution scripts from natural language descriptions, opening new opportunities for future research and tooling.
+The approach has been validated through real-world datasets and case studies, resulting in international publications, open-source prototypes, and academic contributions. Overall, the project advances the capabilities available for database evolution in modern application development environments.
+
+Recently, we have also started to explore the use of Large Language Models (LLMs) to automate the database migration [6][7], an also assist in the generation of Athena schemas and Orion evolution scripts from natural language descriptions, opening new opportunities for future research and tooling [8].
 
 ** References **
+
 [1] Carlos Javier Fernández Candel, Diego Sevilla Ruiz, Jesús Joaquín García Molina: A unified metamodel for NoSQL and relational databases. Inf. Syst. 104: 101898 (2022) [(pdf)](https://www.sciencedirect.com/science/article/pii/S0306437921001149)
 
 [2] Alberto Hernández Chillón, Diego Sevilla Ruiz, Jesús García Molina: Athena: A Database-Independent Schema Definition Language. ER (Workshops) 2021: 33-42 [(pdf)](https://modelum.github.io/publications.html)
@@ -23,7 +25,12 @@ Additionally, we have developed mechanisms for static code analysia, which are b
 
 [4] Alberto Hernández Chillón, Jesús García Molina, José Ramón Hoyos, María José Ortín, Propagating Schema Changes to Code: An Approach Based on a Unified Data Model. CoMoNoS 2023, under EDBT/ICDT Joint Conference, Ioannina, Greece. [(pdf)](https://modelum.github.io/publications.html)
 
-[5] Antonio Pérez Serrano: OrionFlow: Una herramienta CI para bases de datos. Trabajo Fin de Grado. Facultad de Informática. Universidad de Murcia. Junio 2025 [(pdf)](./TFG-OrionFlow-2025-AntonioPS.pdf)
+[5] Antonio Pérez Serrano: OrionFlow: Una herramienta CI para bases de datos. Trabajo Fin de Grado. Facultad de Informática. Universidad de Murcia. Junio 2025 [(pdf)](./Publication/TFG-OrionFlow-2025-AntonioPS.pdf)
+
+[6] Fabián Sola Durán: “Una herramienta de migración de bases de datos basada en LLM. LLMigrator-DB: automatización de la migración de bases de datos haciendo uso de abstracciones de LLM”. Tutores: María José Ortín Ibañez y José Ramón Hoyos Barceló. TFG, Facultad de Informática, Universidad de Murcia, julio 2025.
+
+[7] María-José Ortín-Ibañez, Fabian Sola Durán, José Ramon Hoyos y Jesus Garcia-Molina: Automatización de la Migración de Bases de Datos con Abstracciones de LLM, JISBD-2025, Track de Ingeniería y Ciencia de Datos, Córdoba, septiembre, 2025
+
 
 
 que demuestra cómo realizar una integración continua con una herramienta predictora mediante el lenguaje Orion. También se proporciona 
