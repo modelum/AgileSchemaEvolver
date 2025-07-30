@@ -27,14 +27,12 @@ Recently, we have also started to explore the use of Large Language Models (LLMs
 
 [5] Antonio Pérez Serrano: OrionFlow: Una herramienta CI para bases de datos. Trabajo Fin de Grado. Facultad de Informática. Universidad de Murcia. Junio 2025 [(pdf)](./Publication/TFG-OrionFlow-2025-AntonioPS.pdf)
 
-[6] Fabián Sola Durán: “Una herramienta de migración de bases de datos basada en LLM. LLMigrator-DB: automatización de la migración de bases de datos haciendo uso de abstracciones de LLM”. Tutores: María José Ortín Ibañez y José Ramón Hoyos Barceló. TFG, Facultad de Informática, Universidad de Murcia, julio 2025 [(pdf)](./Publication/TFG-Fabian-Sola.pdf)
+[6] Fabián Sola Durán: “Una herramienta de migración de bases de datos basada en LLM. LLMigrator-DB: automatización de la migración de bases de datos haciendo uso de abstracciones de LLM”. Tutores: María José Ortín Ibañez y José Ramón Hoyos Barceló. TFG, Facultad de Informática, Universidad de Murcia, julio 2025 [(pdf)](./Publication/TFG-Fabian-Sola.pdf) [(Github)](https://github.com/modelum/LLMigrator-DB)
 
 [7] María-José Ortín-Ibañez, Fabian Sola Durán, José Ramon Hoyos y Jesus Garcia-Molina: Automatización de la Migración de Bases de Datos con Abstracciones de LLM, JISBD-2025, Track de Ingeniería y Ciencia de Datos, Córdoba, septiembre, 2025
 
-[8] [Repositorio "OrionTraining y AthenaTraining: Entrenamiento y Pruebas de DSLs con LLM](https://github.com/modelum/jisbd2025-DSLs)
+[8] Repositorio "OrionTraining y AthenaTraining: Entrenamiento y Pruebas de DSLs con LLM". [(GitHub)](https://github.com/modelum/jisbd2025-DSLs)
 
-
-https://github.com/modelum/LLMigrator-DB
 
 # Estructure 
 
@@ -146,6 +144,7 @@ You need configure the codeql-config.yml to specificate the code to analyze.
 # Authors
 
 - [@Zerep0](https://www.github.com/Zerep0)
+- [@jgmolina](https://www.github.com/jgmolina)
 
 
 
