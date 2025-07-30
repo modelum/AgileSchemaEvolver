@@ -34,7 +34,7 @@ Recently, we have also started to explore the use of Large Language Models (LLMs
 [8] Repositorio "OrionTraining y AthenaTraining: Entrenamiento y Pruebas de DSLs con LLM". [(GitHub)](https://github.com/modelum/jisbd2025-DSLs)
 
 
-# Estructure 
+# Structure 
 
 - 📁 **.github**
   - 📁 codeql
