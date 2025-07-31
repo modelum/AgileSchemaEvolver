@@ -55,6 +55,7 @@ Recently, we have also started to explore the use of Large Language Models (LLMs
   - 📁 uschema
 - 📁 **Publications**
   - 📄 Comonos-2023.pdf
+  - 📄 DKE-2023-SkiQL-Schema-Query-Language.pdf
   - 📄 IEEE-TDKE-2024.pdf
   - 📄 JSS-2025-Submitted-Extraction&Refactoring_NoSQL_Schemas_from_Code.pdf
   - 📄 Thesis-Orion-2023-AlbertoHC.pdf
