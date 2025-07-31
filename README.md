@@ -56,10 +56,13 @@ Recently, we have also started to explore the use of Large Language Models (LLMs
 - 📁 **Publications**
   - 📄 Comonos-2023.pdf
   - 📄 IEEE-TDKE-2024.pdf
+  - 📄 JSS-2025-Submitted-Extraction&Refactoring_NoSQL_Schemas_from_Code.pdf
   - 📄 Thesis-Orion-2023-AlbertoHC.pdf
   - 📄 Thesis-Uschema-2023-CarlosFC.pdf
   - 📄 TFG-OrionFlow-2025-AntonioPS.pdf
   - 📄 TFG-LLMigrate-DB-2025-FabiánSD.pdf
+  - 📄 JISBD-2025-LLM_based_database_migration.pdf
+  - 📄 JISBD.2025-LLM&DSL.pdf
 
 # Main Components
 
@@ -68,35 +71,35 @@ Recently, we have also started to explore the use of Large Language Models (LLMs
    - `codeql-analysis.yml`: AST Java Generator and CodeQL Inicializer  
    - `upload-sarif.yml`: Upload SARIF results to code-scanning
 
-2. **Migraciones Orion** (`orion/`)  
+2. **Orion migrations** (`orion/`)  
    - `orion_scripts/`: Migration scripts with name `V{n}_{descripción}.orion`  
    - `orion_schema_version.txt`: check the last version used
    - `version_table.md`: versions table similar to Flyway
 
-3. **Herramientas M2T** (`tools/`)  
+3. **M2T tools** (`tools/`)  
    - **Athena & Orion** (Xtext): DSLs for predictive schema and analysis
    - **CodeQL Generator**: convierte Orion → JPQL/@Query anotated → queries CodeQL  
    - **U-Schema**: unified metamodel relational/NoSQL  
 
-4. **Caso de uso** (`UseCase/`)  
+4. **Use case** (`UseCase/`)  
    - Example app in Java/Spring Boot with Spring Data JPA
 
-# How execute tool M2T to MySQL
+# How to run the M2T tool for MySQL
 
-1. The modeling tools package must be installed from the official Eclipse website: [Modeling Tools](https://www.eclipse.org/downloads/packages/release/2024-12/r/eclipse-modeling-tools) 
+1. The "Modeling tools" package must be installed from the official Eclipse website: [Modeling Tools](https://www.eclipse.org/downloads/packages/release/2024-12/r/eclipse-modeling-tools) 
 
-2. Una vez instalado, se deben instalar las siguientes dependencias desde eclipse marketplace:
-   - [Xtext](https://marketplace.eclipse.org/content/xtext)
-   - [maven2ecore](https://download.eclipse.org/technology/m2e/releases/2.8.0) Esta versión se debe instalar desde install new software, ya que no está disponible en el marketplace.
+2. Once the package is installed, the Xtext and maven2ecore tools must be installed:
+   - [Xtext](https://marketplace.eclipse.org/content/xtext) (Available in the Eclipse Marketplace)
+   - [maven2ecore](https://download.eclipse.org/technology/m2e/releases/2.8.0) (Not Available in the Eclipse Marketplace, must be installed) as "install new software".
 
-3. Once installed, the following dependencies must be installed from the Eclipse Marketplace:
+3. Once the tooling required is installed, the following projects must be imported:
    - `es.um.uschema.xtext.orion.parent` 
    - `es.um.uschema.xtext.athena.parent`
    - `uschema`
 
-4. Once imported, for the Athena and Orion Xtext projects, access the package with the same name as the project and run the **Generate(Athena|Orion).mwe2** file. This step will proceed with errors; the code will be built and the files required for the tool will be generated. Both projects must be compiled, first the Athena project and then the Orion project.
+4. Then,  it is necessary to run the **Generate(Athena|Orion).mwe2**, this file can be found in the folder **añadir**. This step will proceed with errors; the code will be built and the files required for the tool will be generated. Both projects must be compiled, first the Athena project and then the Orion project.
 
-5. Once installed, the input method is located inside the `es.um.uschema.xtext.orion` project:
+5. The M2T transformation is triggered via a Java class containing a main method, located in the es.um.uschema.xtext.orion project.
    - `src/main/java/es/um/uschema/xtext/orion/Orion2MySQLMain.java`
 
 6. The input and output files are specified in the arguments:
@@ -104,7 +107,7 @@ Recently, we have also started to explore the use of Large Language Models (LLMs
    val customArgs = newArrayList("-i", "models/sql/Umugram.orion", "-o", "models/sql/code-generated")
    ```
 
-# How execute workflows with Orion 
+# How ro run workflows with Orion 
 You need configure the codeql-config.yml to specificate the code to analyze.
 
 1. An orion file must be created and placed in the root of the repository, for example `Umugram.orion`.
@@ -121,13 +124,13 @@ You need configure the codeql-config.yml to specificate the code to analyze.
    git commit -m "Umugram.orion"
    git push origin main
    ```
-3. Once uploaded, the changes will appear minutes later in the Github > Security > Code Scanning section, where you can see the result of the `codeql-analysis.yml` workflow execution.
+3. Then, the changes will appear minutes later in the Github > Security > Code Scanning section, where you can see the result of the `codeql-analysis.yml` workflow execution.
 
 4. To make a decision, there are two possible messages after this step. The header must be empty (--allow-empty):
 - orion(accept): nombre_fichero.orion, description
 - orion(cancel): nombre_fichero.orion
 
-5. Sending cases: 
+5. Depending on the chosen option, the following git commands must be executed: 
 - Acceptation case. 
    ```bash
    git add Umugram.orion
