@@ -98,7 +98,7 @@ Recently, we have also started to explore the use of Large Language Models (LLMs
    - `es.um.uschema.xtext.athena.parent`
    - `uschema`
 
-4. Then,  it is necessary to run the **Generate(Athena|Orion).mwe2**, this file can be found in the folder **añadir**. This step will proceed with errors; the code will be built and the files required for the tool will be generated. Both projects must be compiled, first the Athena project and then the Orion project.
+4. Then,  it is necessary to run the **Generate(Athena|Orion).mwe2**, each file is located in her respective folder in *Tools* > (*es.um.uschema.xtext.(Athena|Orion)*) . This step will proceed with errors on the console but not will interrupt the process; the code will be built and the files required for the tool will be generated. Both projects must be compiled, first the Athena project and then the Orion project.
 
 5. The M2T transformation is triggered via a Java class containing a main method, located in the es.um.uschema.xtext.orion project.
    - `src/main/java/es/um/uschema/xtext/orion/Orion2MySQLMain.java`
@@ -108,8 +108,8 @@ Recently, we have also started to explore the use of Large Language Models (LLMs
    val customArgs = newArrayList("-i", "models/sql/Umugram.orion", "-o", "models/sql/code-generated")
    ```
 
-# How ro run workflows with Orion 
-You need configure the codeql-config.yml to specificate the code to analyze.
+# How to run workflows with Orion 
+You need configure the codeql-config.yml. Yo need to create or add a Spring Boot project with Spring Data JPA, and then you can use the codeql-config.yml file to specify the code to analyze.
 
 1. An orion file must be created and placed in the root of the repository, for example `Umugram.orion`.
    ```txt
