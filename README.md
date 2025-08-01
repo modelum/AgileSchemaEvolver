@@ -109,7 +109,7 @@ Recently, we have also started to explore the use of Large Language Models (LLMs
    ```
 
 # How to run workflows with Orion 
-You need configure the codeql-config.yml. Yo need to create or add a Spring Boot project with Spring Data JPA, and then you can use the codeql-config.yml file to specify the code to analyze.
+You need configure the codeql-config.yml. Yo need to create or add a Spring Boot project with Spring Data JPA for later add this content to the repository, and then you can use the codeql-config.yml file to specify the code to analyze. If you want analyce all the repository you can use the wild card symbol.
 
 1. An orion file must be created and placed in the root of the repository, for example `Umugram.orion`.
    ```txt
